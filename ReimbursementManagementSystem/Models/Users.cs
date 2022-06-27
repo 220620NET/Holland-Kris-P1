@@ -15,8 +15,8 @@ public enum Role{
 public class Users{
     public string userID {get;set;}
     public string name {get;set;}
-    public string password{get;set};
-    public Role role{get;set;};
+    public string password{get;set;}
+    public Role role{get;set;}
 
 
     //Creating a large constructor for all information to be placed in at once
