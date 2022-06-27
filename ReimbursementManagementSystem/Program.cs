@@ -22,5 +22,23 @@
     Need classes for a Users
         string userID
         string name
-        string 
+        string Role
+        string password
+    
+    Need class for tickets
+        int ID
+        string Author
+        string resolver
+        string description
+        string status
+        decimal amount
+    
+    Need three custom exceptions
+        ResourceNotFound
+        UsernameNotAvailable
+        InvalidCreditials
 */
+// using Models;
+// using CustomExceptions;
+
+Console.WriteLine("Works");
