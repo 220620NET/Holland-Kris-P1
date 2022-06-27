@@ -22,7 +22,7 @@
     Need classes for a Users
         string userID
         string name
-        string Role
+        enum Role
         string password
     
     Need class for tickets
