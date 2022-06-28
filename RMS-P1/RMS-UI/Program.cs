@@ -33,4 +33,5 @@
         UsernameNotAvailable
         InvalidCreditials
 */
+using Models;
 Console.WriteLine("Works");
