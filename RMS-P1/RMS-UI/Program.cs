@@ -34,6 +34,7 @@
         InvalidCreditials
 */
 using Models;
+using CustomExceptions;
 Console.WriteLine("Works");
 Console.WriteLine("Welcome: \nWhat is your Personal ID?");
 int iD = Convert.ToInt32(Console.ReadLine());
