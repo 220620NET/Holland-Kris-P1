@@ -1,4 +1,5 @@
 ﻿namespace Models;
+using CustomExceptions;
 
 public enum Roles{
     Employee, Manager
