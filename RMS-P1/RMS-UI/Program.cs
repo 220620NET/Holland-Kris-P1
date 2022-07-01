@@ -35,11 +35,16 @@
 */
 using Models;
 using CustomExceptions;
+using System.Numerics;
+
+
+
 Console.WriteLine("Works");
 Console.WriteLine("Welcome: \nWhat is your Personal ID?");
 int iD = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("How much is your request for?");
-decimal mon = Convert.ToDecimal(Console.ReadLine());
+decimal k = Convert.ToDecimal(Console.ReadLine());
+decimal mon = Decimal.Round(k,2);
 Console.WriteLine($"Why are you requesting {mon}?");
 string d = Console.ReadLine();
 Random numTicket = new Random();
