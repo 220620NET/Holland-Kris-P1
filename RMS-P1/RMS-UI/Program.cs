@@ -33,6 +33,7 @@
         UsernameNotAvailable
         InvalidCreditials
 */
+using DataAccess;
 using Models;
 
 
@@ -46,6 +47,8 @@ string d = Console.ReadLine();
 Random numTicket = new Random();
 
 Tickets Kris=new Tickets(iD,numTicket.Next(300),d, mon);
-
+Users Sam= new Users(iD, "Sam","Password", Roles.Manager);
 Console.WriteLine("Do I have your information right?");
 Console.WriteLine(Kris.ToString());
+new UserRegistry().AddUser(Sam);
+new TicketRegistry().AddTicket(Kris);
