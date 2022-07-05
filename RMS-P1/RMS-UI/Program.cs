@@ -35,8 +35,15 @@
 */
 using DataAccess;
 using Models;
-
-
+using System.Text.Json;
+/* Creating a Test User and Ticket for Ticket Registry and User Registry
+    This will be removed before the end of the week but this is an intermediate step to ensure that the Program will function properly
+    
+    As of 7/5/2022 This program functions and can do the following
+        It can add a user to a json file
+        It can add a ticket to a json file
+        It can request a Specific user or ticket by a provided ID for Either the author of the ticket or the User ID
+*/
 Console.WriteLine("Welcome: \nWhat is your Personal ID?");
 int iD = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("How much is your request for?");
@@ -50,5 +57,15 @@ Tickets Kris=new Tickets(iD,numTicket.Next(300),d, mon);
 Users Sam= new Users(iD, "Sam","Password", Roles.Manager);
 Console.WriteLine("Do I have your information right?");
 Console.WriteLine(Kris.ToString());
-new UserRegistry().AddUser(Sam);
-new TicketRegistry().AddTicket(Kris);
+/* Added a Try catch block chain so that I can add more than one and test if duplicates can happen
+    They cannot. Happy days
+*/
+try{
+    new UserRegistry().AddUser(Sam);
+}catch(ArgumentException ex){
+    Console.WriteLine("No Can do.");
+}try{
+    new TicketRegistry().AddTicket(Kris);
+} catch(ArgumentException ex){
+    Console.WriteLine(ex);
+}
