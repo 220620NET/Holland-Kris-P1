@@ -36,9 +36,6 @@
 using Models;
 
 
-
-
-Console.WriteLine("Works");
 Console.WriteLine("Welcome: \nWhat is your Personal ID?");
 int iD = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("How much is your request for?");
@@ -49,6 +46,6 @@ string d = Console.ReadLine();
 Random numTicket = new Random();
 
 Tickets Kris=new Tickets(iD,numTicket.Next(300),d, mon);
+
 Console.WriteLine("Do I have your information right?");
 Console.WriteLine(Kris.ToString());
-
