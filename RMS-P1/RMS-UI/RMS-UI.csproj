@@ -4,6 +4,7 @@
     <ProjectReference Include="..\Models\Models.csproj" />
     <ProjectReference Include="..\CustomExceptions\CustomExceptions.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="System.Data.SqlClient"  Version="4.6.0"/>
   </ItemGroup>
 
   <PropertyGroup>
