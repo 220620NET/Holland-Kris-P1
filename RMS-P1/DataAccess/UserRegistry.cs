@@ -41,7 +41,7 @@ public class UserRegistry{
     public Users AddUser(Users newUser){
         try{
             Dictionary<int,Users> allUsers=GetUsers();
-            allUsers.Add(newUser.UserID, newUser);
+            allUsers.Add(newUser.userID, newUser);
             File.WriteAllText(file, JsonSerializer.Serialize(allUsers));
             return newUser;
         }catch(JsonException){

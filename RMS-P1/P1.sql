@@ -6,10 +6,18 @@ create table P1.users(
 	password varchar(20) not null,
 	role varchar(8) default 'Employee'
 );
+-- GetAllUsers()
 select * from P1.users;
 drop table P1.users; -- For fixing errors if they occur
+--CreateUser()
 insert into P1.users(username,password) values ('Kris','password');
 insert into P1.users(username,password, role) values ('Juniper', 'password','Manager');
+-- GetUserByUsername()
+select * from P1.users where username = 'Kris';
+-- GetUserByID()
+select * from P1.users where userID =1;
+
+
 
 create table P1.tickets(
 	ticketNum int identity primary key,
@@ -19,7 +27,16 @@ create table P1.tickets(
 	description varchar(255) not null,
 	amount money not null
 );
-select *from P1.tickets;
+--GetAllTickets()
+select * from P1.tickets;
 drop table P1.tickets;
+-- CreateTicket()
 insert into P1.tickets(author,resolver,description, amount) values ('Kris','Juniper','Testing Ticket table','18.32');
-update P1.tickets set status ='Denied' where amount < 25;
+-- UpdateTicket()
+update P1.tickets set status ='Approved' where status = 'Pending';
+-- GetTicketByAuthor()
+select * from P1.tickets where author = 'Kris';
+-- GetTicketByStatus()
+select * from P1.tickets where status = 'Pending';
+-- GetTicketByID()
+select * from P1.tickets where ticketNum = 1;

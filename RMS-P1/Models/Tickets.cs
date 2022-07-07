@@ -29,30 +29,30 @@ public enum Status{
 */
 //Basic class for Tickets setting an Author and Resolver will require its own login
 public class Tickets{
-    public int Author{get;set;}
-    public int ID{get;set;}
-    public int Resolver{get;set;}
-    public string Description{get;set;}
-    public Status State{get;set;}
-    private decimal Amount{get;set;}
+    public int author{get;set;}
+    public int ticketNum{get;set;}
+    public int resolver{get;set;}
+    public string description{get;set;}
+    public Status status{get;set;}
+    private decimal amount{get;set;}
     //For the Employee making the ticket
     public Tickets (){}
     public Tickets(int aToSet, int idToSet, string dToSet, decimal money){
-        Author = aToSet;
-        ID = idToSet;
-        Description = dToSet;
-        this.Amount = money;
+        author = aToSet;
+        ticketNum = idToSet;
+        description = dToSet;
+        amount = money;
     }
     //For the Managers who can set a ticket to be either approved or denied
     public Tickets(int aToSet, int rToSet, int idToSet, string dToSet, decimal money, Status sToSet){
-        Author = aToSet;
-        ID = idToSet;
-        Description = dToSet;
-        this.Amount = money;
-        State = sToSet;
-        Resolver=rToSet;
+        author = aToSet;
+        ticketNum = idToSet;
+        description = dToSet;
+        amount = money;
+        status = sToSet;
+        resolver=rToSet;
     }
     public override string ToString(){
-        return $"ID: {this.Author} \nID of Ticket: {this.ID} \nAmount Requested: ${this.Amount}\nReason:{this.Description}";
+        return $"ID: {this.author} \nID of Ticket: {this.ticketNum} \nAmount Requested: ${this.amount}\nReason:{this.description}";
     }
 }

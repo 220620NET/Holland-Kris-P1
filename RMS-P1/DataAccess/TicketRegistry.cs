@@ -41,7 +41,7 @@ public class TicketRegistry{
     public Tickets AddTicket(Tickets newTicket){
         try{
             Dictionary<int,Tickets> allTickets=GetTickets();
-            allTickets.Add(newTicket.ID, newTicket);
+            allTickets.Add(newTicket.ticketNum, newTicket);
             File.WriteAllText(file, JsonSerializer.Serialize(allTickets));
             return newTicket;
         }catch(JsonException){

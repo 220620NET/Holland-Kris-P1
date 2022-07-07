@@ -19,22 +19,22 @@ public enum Roles{
         This may be simplified to one later because I might want the login to be a different system managed differently
 */
 public class Users{
-    public Roles Role {get;set;}
-    public int UserID{get;set;}
-    public string Name{get;set;}
-    public string Password{get;set;}
+    public Roles role {get;set;}
+    public int userID{get;set;}
+    public string username{get;set;}
+    public string password{get;set;}
     public Users(){}
     public Users(int user, string Name, string password, Roles role){
-        UserID = user;
-        this.Name=Name;
-        Password=password;
-        Role = role;
+        userID = user;
+        username=Name;
+        this.password=password;
+        this.role = role;
     }
     public Users(string name, string password){
-        Name=name;
-        Password=password;
+        username=name;
+        this.password=password;
     }
     public override string ToString(){
-        return $"Name: {Name}, Password: {Password}";
+        return $"Name: {username}, Password: {this.password}";
     }
 }
