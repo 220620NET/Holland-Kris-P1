@@ -11,6 +11,7 @@ namespace Services
 {
     public class UserServices
     {
+        //GetUserByUsername
         public Users GetUserByUsername(string username)
         {
             try
@@ -22,6 +23,7 @@ namespace Services
                 throw;
             }
         }
+        //GetAllUsers
         public List<Users> GetAllUsers()
         {
             try
@@ -33,6 +35,7 @@ namespace Services
                 throw;
             }
         }
+        //GetUserByuserID
         public Users GetUserByuserId(int userId)
         {
             try
