@@ -15,7 +15,12 @@ namespace Services
         {
             try
             {
-                return new TicketRepostitory().CreateTicket(newTicket);
+                bool s =  new TicketRepostitory().CreateTicket(newTicket);
+                if (s)
+                {
+                    return true;
+                }
+                else { return false; }
             }
             catch (Exception)
             {

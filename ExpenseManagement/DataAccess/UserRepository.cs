@@ -13,7 +13,15 @@ namespace DataAccess
     public class UserRepository:UserDAO
     {
         string connectionString = $"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
-        //GetAllUsers
+
+        /* GetAllUsers Method
+         * 
+         *  This will create an instance of the SQL command SELECT * FROM P1.users;
+         *  This method will return the complete list of users in the database.
+         *      Should the database be empty it will return a new instance of a List of Users
+         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
+         *  This is completed by callng a RoleToNum method in the Users class
+         */
         public List<Users> GetAllUsers()
         {
             string sql = "select * from P1.users;";
@@ -42,6 +50,12 @@ namespace DataAccess
             }
             return users;
         }
+        /*  GetUserById
+         *  This method will create an instance of the SQL command SELECT*FROM P1.users WHERE userID=<input>;
+         *      To achieve this it will implement the SqlCommand.Parameters.AddWithValue() Method
+         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
+         *  This is completed by callng a RoleToNum method in the Users class
+         */
         public Users GetUserById(int userId)
         {
             string sql = "select * from P1.users where userID = @a;";
@@ -66,10 +80,16 @@ namespace DataAccess
             }
             catch (ResourceNotFoundException)
             {
-                throw;
+                throw new ResourceNotFoundException();
             }
             return you;
         }
+        /*  GetUserByUsername
+         *  This method will create an instance of the SQL command SELECT*FROM P1.users WHERE username=<input>;
+         *      To achieve this it will implement the SqlCommand.Parameters.AddWithValue() Method
+         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
+         *  This is completed by callng a RoleToNum method in the Users class
+         */
         public Users GetUserByUsername(string username)
         {
             string sql = "select * from P1.users where username = @a;";
@@ -100,6 +120,14 @@ namespace DataAccess
             }
             return you;
         }
+        /*  CreateUser
+         *  This method will add a record to the users table in the database by implementing the SQL command
+         *      insert into P1.users(username, password, role) values(<input.username>,<input.password>, <input.role>);
+         *  As may have been noticed the role cannot be interpreted as a varchar for the database so it passes through a method to change the role to a string
+         *  This method is inside the Users class called RoleToString()
+         *  This method finally returns a boolean indicating if the user was added
+         *  If the user was not created it throws an exception that the username was not available and returns false. This is because this is the only reason a normal request would be not allowed.
+         */
         public bool CreateUser(Users newUser)
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
@@ -119,8 +147,12 @@ namespace DataAccess
                 {
                     return true;
                 }
+                else
+                {
+                    throw new UsernameNotAvailable();
+                }
             }
-            catch (Exception e)
+            catch (UsernameNotAvailable e)
             {
                 Console.WriteLine(e.Message);
             }

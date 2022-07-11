@@ -38,14 +38,24 @@ namespace Services
         //GetUserByuserID
         public Users GetUserByuserId(int userId)
         {
+            Users users = new Users();
             try
             {
-                return new UserRepository().GetUserById(userId);
+                List<Users> userList = GetAllUsers();
+                if (userList.Count <userId)
+                {
+                    throw new ResourceNotFoundException();
+                }
+                else
+                {
+                    users =new UserRepository().GetUserById(userId);
+                }
             }
             catch (ResourceNotFoundException)
             {
                 throw;
             }
+            return users;
         }
     }
 }

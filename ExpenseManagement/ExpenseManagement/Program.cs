@@ -19,9 +19,16 @@ Console.WriteLine("Done");*/
 
 try
 {
-    Console.WriteLine(new UserServices().GetUserByuserId(7));
+    Users newUser = new Users("Peter", "asdoans", 0);
+    Console.WriteLine(new UserRepository().CreateUser(newUser));
 }
-catch (ResourceNotFoundException)
+catch (Exception)
 {
     Console.WriteLine("No user was foudn with that ID");
 }
+List<Users> users = new UserServices().GetAllUsers();
+foreach(Users user in users)
+{
+    Console.WriteLine(user);
+}
+

@@ -38,6 +38,9 @@ namespace Models
             this.password = password;
             this.role = role;
         }
+        /*  RoleToNum
+         *  This method will take in a string and return the 
+         */
         public int RoleToNum(string s)
         {
            if(s == "Manager")
