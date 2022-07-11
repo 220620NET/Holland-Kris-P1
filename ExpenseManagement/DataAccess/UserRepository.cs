@@ -58,7 +58,7 @@ namespace DataAccess
                 while (reader.Read())
                 {
                     int k = s.RoleToNum((string)reader[3]);
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)reader[3]);
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k);
                 }
                 reader.Close();
                 connection.Close();
@@ -87,7 +87,7 @@ namespace DataAccess
                 while (reader.Read())
                 {
                     int k = s.RoleToNum((string)reader[3]);
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)reader[3]);                   
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k);                   
                 }
 
                 reader.Close();

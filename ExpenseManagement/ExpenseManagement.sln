@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManagement", "ExpenseManagement\ExpenseManagement.csproj", "{EB7DC3B6-2BAB-4F82-938E-1C7DEFBF1E8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManagement", "ExpenseManagement\ExpenseManagement.csproj", "{EB7DC3B6-2BAB-4F82-938E-1C7DEFBF1E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{03044C90-2521-416D-8126-8BF067AC5DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{03044C90-2521-416D-8126-8BF067AC5DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{96A11549-7DAC-46EC-8177-587BB715E903}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{96A11549-7DAC-46EC-8177-587BB715E903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sensitive", "sensitive\sensitive.csproj", "{F19DC630-59C3-40B5-B3F9-5A76EDE7A09D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sensitive", "sensitive\sensitive.csproj", "{F19DC630-59C3-40B5-B3F9-5A76EDE7A09D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomExceptions", "CustomExceptions\CustomExceptions.csproj", "{59EE31BD-7D8D-40AA-B348-27C9AE4B1F53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomExceptions", "CustomExceptions\CustomExceptions.csproj", "{59EE31BD-7D8D-40AA-B348-27C9AE4B1F53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{E5C89160-1E5F-4F4E-A552-5D3B5D1E1784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{ED15418B-9CF5-4B1E-B84B-D169CE8B962C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{59EE31BD-7D8D-40AA-B348-27C9AE4B1F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59EE31BD-7D8D-40AA-B348-27C9AE4B1F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59EE31BD-7D8D-40AA-B348-27C9AE4B1F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C89160-1E5F-4F4E-A552-5D3B5D1E1784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C89160-1E5F-4F4E-A552-5D3B5D1E1784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C89160-1E5F-4F4E-A552-5D3B5D1E1784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C89160-1E5F-4F4E-A552-5D3B5D1E1784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED15418B-9CF5-4B1E-B84B-D169CE8B962C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED15418B-9CF5-4B1E-B84B-D169CE8B962C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED15418B-9CF5-4B1E-B84B-D169CE8B962C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED15418B-9CF5-4B1E-B84B-D169CE8B962C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

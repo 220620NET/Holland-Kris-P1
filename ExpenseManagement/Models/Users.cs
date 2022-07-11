@@ -54,5 +54,9 @@ namespace Models
             }
             else { return "Manager"; }
         }
+        public override string ToString()
+        {
+            return $"Id: {this.userId}, Name: {this.username}, Role: {this.role}";
+        }
     }
 }
