@@ -16,19 +16,12 @@ int k =int.Parse(Console.ReadLine());
 Tickets s = ticketDAO.GetTicketsById(k);
 Console.WriteLine(s);
 Console.WriteLine("Done");*/
-Users newUser = new Users("Mark", "sakd", 1);
+
 try
 {
-    bool user = new AuthServices().Register(newUser);
-    Console.WriteLine(user);
-} catch (UsernameNotAvailable e)
-{
-    Console.WriteLine(e.Message);
-    Console.WriteLine("incorrect username or password");
+    Console.WriteLine(new UserServices().GetUserByuserId(7));
 }
-
-List<Users> users = new UserRepository().GetAllUsers();
-foreach (Users user in users)
+catch (ResourceNotFoundException)
 {
-    Console.WriteLine(user);
+    Console.WriteLine("No user was foudn with that ID");
 }

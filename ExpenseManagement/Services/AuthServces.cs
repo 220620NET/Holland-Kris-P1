@@ -10,7 +10,7 @@ namespace Services
             Users user;
             try
             {
-                user = new UserRepository().GetUserByUsername(username);
+                user = new UserServices().GetUserByUsername(username);
                 if (user.password == password)
                 {
                     return user;
@@ -25,7 +25,7 @@ namespace Services
         {
             try
             {
-                Users test = new UserRepository().GetUserByUsername(newUser.username);
+                Users test = new UserServices().GetUserByUsername(newUser.username);
                 if (test.username == newUser.username)
                 {
                     throw new UsernameNotAvailable();

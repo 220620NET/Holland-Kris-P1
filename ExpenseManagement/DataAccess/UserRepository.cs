@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using sensitive;
 using Models;
+using CustomExceptions;
 
 namespace DataAccess
 {
@@ -63,10 +64,9 @@ namespace DataAccess
                 reader.Close();
                 connection.Close();
             }
-            catch (Exception e)
+            catch (ResourceNotFoundException)
             {
-                Console.WriteLine(e.Message);
-                return new Users();
+                throw;
             }
             return you;
         }
