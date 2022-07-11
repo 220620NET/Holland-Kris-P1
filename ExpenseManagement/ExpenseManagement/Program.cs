@@ -2,6 +2,7 @@
 using DataAccess;
 using Models;
 using Services;
+using CustomExceptions;
 /*Console.WriteLine("Here Are The entries right now");
 TicketDAO ticketDAO = new TicketRepostitory();
 List<Tickets> t = ticketDAO.GetAllTickets();
@@ -15,5 +16,19 @@ int k =int.Parse(Console.ReadLine());
 Tickets s = ticketDAO.GetTicketsById(k);
 Console.WriteLine(s);
 Console.WriteLine("Done");*/
-Users user = new AuthServices().Login("Kris", "password");
-Console.WriteLine(user);
+Users newUser = new Users("Mark", "sakd", 1);
+try
+{
+    bool user = new AuthServices().Register(newUser);
+    Console.WriteLine(user);
+} catch (UsernameNotAvailable e)
+{
+    Console.WriteLine(e.Message);
+    Console.WriteLine("incorrect username or password");
+}
+
+List<Users> users = new UserRepository().GetAllUsers();
+foreach (Users user in users)
+{
+    Console.WriteLine(user);
+}

@@ -18,11 +18,27 @@ namespace Services
                 else { throw new InvalidCredentialsException(); }
             }catch (InvalidCredentialsException e)
             {
-                Console.WriteLine(e.Message);
-                return new Users();
+                throw;
+            }
+        }
+        public bool Register(Users newUser)
+        {
+            try
+            {
+                Users test = new UserRepository().GetUserByUsername(newUser.username);
+                if (test.username == newUser.username)
+                {
+                    throw new UsernameNotAvailable();
+                }else
+                {
+                    return new UserRepository().CreateUser(newUser);
+                }
+            }catch(Exception)
+            {
+                throw;
+                
             }
             
         }
-
     }
 }
