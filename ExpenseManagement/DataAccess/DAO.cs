@@ -1,7 +1,7 @@
 ﻿using Models;
 namespace DataAccess
 {
-    public interface TicketDAO
+    public interface ITicketDAO
     {
         public List<Tickets> GetAllTickets();
         public bool CreateTicket(Tickets newTicket);
@@ -10,7 +10,7 @@ namespace DataAccess
         public List<Tickets> GetTicketsByAuthor(int authorId);
         public List<Tickets> GetTicketsByStatus(Status state);
     }
-    public interface UserDAO
+    public interface IUserDAO
     {
         public List<Users> GetAllUsers();
         public Users GetUserById(int userId);

@@ -19,7 +19,7 @@ Console.WriteLine("Done");*/
 
 try
 {
-    Users newUser = new Users("Peter", "asdoans", 0);
+    Users newUser = new Users("P", "asdoans", 0);
     Console.WriteLine(new UserRepository().CreateUser(newUser));
 }
 catch (Exception)

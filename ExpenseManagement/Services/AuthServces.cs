@@ -5,6 +5,12 @@ namespace Services
 {
     public class AuthServices
     {
+        private readonly IUserDAO _user;
+        // Dependency Injection
+        public AuthServices(IUserDAO userDao)
+        {
+            _user = userDao;
+        }
         /*  Login
          *  This method will take in 2 strings one for a username and one for a password.
          *  It will first Get the user by its username through the UserServices
@@ -17,10 +23,10 @@ namespace Services
             Users user;
             try
             {
-                user = new UserServices().GetUserByUsername(username);
+                user = _user.GetUserByUsername(username);
                 if (user.username == "")
                 {
-                    throw new ResourceNotFoundException;
+                    throw new ResourceNotFoundException();
                 }
                 if (user.password == password)
                 {
@@ -32,7 +38,7 @@ namespace Services
             {
                 throw;
             }
-            catch (InvalidCredentialsException e)
+            catch (InvalidCredentialsException)
             {
                 throw;
             }
@@ -43,13 +49,13 @@ namespace Services
         {
             try
             {
-                Users test = new UserServices().GetUserByUsername(newUser.username);
+                Users test =  _user.GetUserByUsername(newUser.username);
                 if (test.username == newUser.username)
                 {
                     throw new UsernameNotAvailable();
                 }else
                 {
-                    return new UserRepository().CreateUser(newUser);
+                    return _user.CreateUser(newUser);
                 }
             }catch(UsernameNotAvailable)
             {

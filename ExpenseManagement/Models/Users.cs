@@ -16,21 +16,36 @@ namespace Models
         public string username { get; set; }
         public string password { get; set; }
         public Role role { get; set; }
-        //For Logging in
+        /// <summary>
+        /// Constructor of Users class used for Logging in
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public Users(string username,string password)
         {
             this.username = username;
             this.password = password;
         }
         public Users() { }
-        // For Registering account need to ask if employee or manager
+        /// <summary>
+        /// Constructor of USers class used for Registering a new user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="role"></param>
         public Users(string username, string password, int role)
         {
             this.username = username;
             this.password = password;
             this.role = (Role) role;
         }
-        // For Getting all users
+        /// <summary>
+        /// Constructor of Users clas used for collecting information from database in GetAllUsers methods
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="role"></param>
         public Users(int userId, string username, string password, Role role)
         {
             this.userId = userId;
@@ -38,9 +53,11 @@ namespace Models
             this.password = password;
             this.role = role;
         }
-        /*  RoleToNum
-         *  This method will take in a string and return the 
-         */
+        /// <summary>
+        /// Converts a casted string from the database into an integer for reference to the Role enum
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>integer of related role</returns>
         public int RoleToNum(string s)
         {
            if(s == "Manager")
@@ -49,6 +66,11 @@ namespace Models
             }
             else { return 0; }
         }
+        /// <summary>
+        /// For putting a role into a string for the purposes of updating a user or creating a user 
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns>string representing the role of the user</returns>
         public string RoleToString(Role role)
         {
             if(role == Role.Employee)

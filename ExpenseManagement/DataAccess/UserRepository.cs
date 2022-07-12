@@ -10,9 +10,9 @@ using CustomExceptions;
 
 namespace DataAccess
 {
-    public class UserRepository:UserDAO
+    public class UserRepository: IUserDAO
     {
-        string connectionString = $"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+       /* string connectionString = $"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";*/
 
         /* GetAllUsers Method
          * 
@@ -24,16 +24,16 @@ namespace DataAccess
          */
         public List<Users> GetAllUsers()
         {
+            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
             string sql = "select * from P1.users;";
             //datatype for an active connection
-            SqlConnection connection = new SqlConnection(connectionString);
             //datatype to reference the sql command you want to do to a specific connection
-            SqlCommand command = new SqlCommand(sql, connection);
+            SqlCommand command = new SqlCommand(sql, conn);
             List<Users> users = new List<Users>();
             Users s = new Users();
             try
             {
-                connection.Open();
+                conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -41,7 +41,7 @@ namespace DataAccess
                     users.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k));
                 }
                 reader.Close();
-                connection.Close();
+                conn.Close();
             }
             catch (Exception e)
             {
@@ -60,15 +60,14 @@ namespace DataAccess
         {
             string sql = "select * from P1.users where userID = @a;";
             //datatype for an active connection
-            SqlConnection connection = new SqlConnection(connectionString);
-            //datatype to reference the sql command you want to do to a specific connection
-            SqlCommand command = new SqlCommand(sql, connection);
+            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlCommand command = new SqlCommand(sql, conn);
             command.Parameters.AddWithValue("@a", userId);
             Users you = new Users();
             Users s = new Users();
             try
             {
-                connection.Open();
+                conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -76,7 +75,7 @@ namespace DataAccess
                     you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k);
                 }
                 reader.Close();
-                connection.Close();
+                conn.Close();
             }
             catch (ResourceNotFoundException)
             {
@@ -94,15 +93,15 @@ namespace DataAccess
         {
             string sql = "select * from P1.users where username = @a;";
             //datatype for an active connection
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
-            SqlCommand command = new SqlCommand(sql, connection);
+            SqlCommand command = new SqlCommand(sql,conn);
             command.Parameters.AddWithValue("@a", username);
             Users you = new Users();
             Users s = new Users();
             try
             {
-                connection.Open();
+                conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -111,7 +110,7 @@ namespace DataAccess
                 }
 
                 reader.Close();
-                connection.Close();
+                conn.Close();
             }
             catch (Exception e)
             {
@@ -132,17 +131,17 @@ namespace DataAccess
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
             //datatype for an active connection
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
-            SqlCommand command = new SqlCommand(sql, connection);
+            SqlCommand command = new SqlCommand(sql,conn);
             command.Parameters.AddWithValue("@u", newUser.username);
             command.Parameters.AddWithValue("@p", newUser.password);
             command.Parameters.AddWithValue("@r", newUser.RoleToString(newUser.role));
             try
             {
-                connection.Open();
+                conn.Open();
                 int ra = command.ExecuteNonQuery();
-                connection.Close();
+                conn.Close();
                 if (ra != 0)
                 {
                     return true;
