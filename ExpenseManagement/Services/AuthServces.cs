@@ -11,13 +11,15 @@ namespace Services
         {
             _user = userDao;
         }
-        /*  Login
-         *  This method will take in 2 strings one for a username and one for a password.
-         *  It will first Get the user by its username through the UserServices
-         *  After the user has been retrieved it checks the username and then the password
-         *      If the username of the retrieved user is whitespace it will throw a ResourceNotFound Exception
-         *      If the password is not the same as the retrieved user if will throw an InvalidCredentials Exception
-         */
+       
+        /// <summary>
+        /// This methods logs in a users with the username and password and searches for the user in the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>User record from the database concurrent with the provided inputs</returns>
+        /// <exception cref="ResourceNotFoundException">Occurs if the username does not exist in the database</exception>
+        /// <exception cref="InvalidCredentialsException">Occurs if the username and password do not match</exception>
         public Users Login(string username, string password)
         {
             Users user;
@@ -36,33 +38,40 @@ namespace Services
             }
             catch (ResourceNotFoundException)
             {
-                throw;
+                throw new ResourceNotFoundException();
             }
             catch (InvalidCredentialsException)
             {
-                throw;
+                throw new InvalidCredentialsException();
             }
-
-
         }
-        public bool Register(Users newUser)
+        /// <summary>
+        /// Registers a new user and simultaneosly logs in the new user after successful registration
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns>Registered new user</returns>
+        /// <exception cref="UsernameNotAvailable">Occurs if the provided username already exists in the database or if the username is harmful</exception>
+        public Users Register(Users newUser)
         {
             try
             {
-                Users test =  _user.GetUserByUsername(newUser.username);
+                Users test = _user.GetUserByUsername(newUser.username);
                 if (test.username == newUser.username)
                 {
                     throw new UsernameNotAvailable();
-                }else
+                }
+                else if (newUser.username == "" || newUser.username.Contains(";") || newUser.username.Contains("drop"))
+                {
+                    throw new UsernameNotAvailable();
+                }
+                else
                 {
                     return _user.CreateUser(newUser);
                 }
             }catch(UsernameNotAvailable)
             {
-                throw;
-                
-            }
-            
+                throw new UsernameNotAvailable();                
+            }            
         }
     }
 }

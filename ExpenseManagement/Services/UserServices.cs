@@ -44,7 +44,7 @@ namespace Services
                 List<Users> userList = GetAllUsers();
                 if (userList.Count <userId)
                 {
-                    throw new ResourceNotFoundException();
+                    throw new UsernameNotAvailable();
                 }
                 else
                 {

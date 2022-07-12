@@ -13,8 +13,8 @@ namespace Models
     public class Users
     {
         public int userId { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public string? username { get; set; }
+        public string? password { get; set; }
         public Role role { get; set; }
         /// <summary>
         /// Constructor of Users class used for Logging in

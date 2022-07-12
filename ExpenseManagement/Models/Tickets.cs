@@ -11,7 +11,7 @@
         public Status status { get; set; }
         public int author { get; set; }
         public int resolver { get; set; }
-        public string description { get; set; }
+        public string? description { get; set; }
         public decimal amount { get; set; }
         public Tickets() { }
         //Will be used when creating a ticket

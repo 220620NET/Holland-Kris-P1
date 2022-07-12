@@ -8,6 +8,8 @@ using sensitive;
 
 namespace DataAccess
 {
+
+    //This clas uses Singleton and factory design pattern
     public class ConnectionFactory
     {
         private static ConnectionFactory? _instance;
@@ -30,11 +32,6 @@ namespace DataAccess
         }
         public SqlConnection GetConnection()
         {
-          // throw new NotImplementedException();
-            /* SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
-            return conn;*/
-
             return new SqlConnection(_connectionString);
         }
     }

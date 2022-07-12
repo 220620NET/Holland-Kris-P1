@@ -1,6 +1,9 @@
 ﻿using Models;
 namespace DataAccess
 {
+    /// <summary>
+    /// Interface for the Ticket Repository class
+    /// </summary>
     public interface ITicketDAO
     {
         public List<Tickets> GetAllTickets();
@@ -10,11 +13,14 @@ namespace DataAccess
         public List<Tickets> GetTicketsByAuthor(int authorId);
         public List<Tickets> GetTicketsByStatus(Status state);
     }
+    /// <summary>
+    /// Interface for the User Repository class
+    /// </summary>
     public interface IUserDAO
     {
         public List<Users> GetAllUsers();
         public Users GetUserById(int userId);
         public Users GetUserByUsername(string userName);
-        public bool CreateUser(Users user);
+        public Users CreateUser(Users user);
     }
 }

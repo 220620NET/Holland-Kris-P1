@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using sensitive;
 using Models;
 using CustomExceptions;
 
@@ -12,22 +11,15 @@ namespace DataAccess
 {
     public class UserRepository: IUserDAO
     {
-       /* string connectionString = $"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";*/
-
-        /* GetAllUsers Method
-         * 
-         *  This will create an instance of the SQL command SELECT * FROM P1.users;
-         *  This method will return the complete list of users in the database.
-         *      Should the database be empty it will return a new instance of a List of Users
-         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
-         *  This is completed by callng a RoleToNum method in the Users class
-         */
+        /// <summary>
+        /// This will create an instance of the SQL command SELECT * FROM P1.users;
+        /// </summary>
+        /// <returns>List of all users in the database</returns>
+        /// <exception cref="ResourceNotFoundException">Occurs if either the database does not exist or if the table is empty</exception>
         public List<Users> GetAllUsers()
         {
             SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
             string sql = "select * from P1.users;";
-            //datatype for an active connection
-            //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql, conn);
             List<Users> users = new List<Users>();
             Users s = new Users();
@@ -43,19 +35,19 @@ namespace DataAccess
                 reader.Close();
                 conn.Close();
             }
-            catch (Exception e)
+            catch (ResourceNotFoundException)
             {
-                Console.WriteLine(e.Message);
-                return new List<Users>();
+                throw new ResourceNotFoundException();
             }
             return users;
         }
-        /*  GetUserById
-         *  This method will create an instance of the SQL command SELECT*FROM P1.users WHERE userID=<input>;
-         *      To achieve this it will implement the SqlCommand.Parameters.AddWithValue() Method
-         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
-         *  This is completed by callng a RoleToNum method in the Users class
-         */
+       
+        /// <summary>
+        /// This method will create an instance of the SQL command SELECT*FROM P1.users WHERE userID = <input>"userID"</input>
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="ResourceNotFoundException">Occurs if the userId does not exist in the table</exception>
         public Users GetUserById(int userId)
         {
             string sql = "select * from P1.users where userID = @a;";
@@ -83,12 +75,13 @@ namespace DataAccess
             }
             return you;
         }
-        /*  GetUserByUsername
-         *  This method will create an instance of the SQL command SELECT*FROM P1.users WHERE username=<input>;
-         *      To achieve this it will implement the SqlCommand.Parameters.AddWithValue() Method
-         *  Since the role of the user is saved as an enumerator it must be transfered to a number to indicate a enumeration
-         *  This is completed by callng a RoleToNum method in the Users class
-         */
+      
+        /// <summary>
+        /// This method will create an instance of the SQL command SELECT*FROM P1.users WHERE username=<input>param</input>
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>User with specified username</returns>
+        /// <exception cref="UsernameNotAvailable">Occurs if the username is not in the database</exception>
         public Users GetUserByUsername(string username)
         {
             string sql = "select * from P1.users where username = @a;";
@@ -112,22 +105,23 @@ namespace DataAccess
                 reader.Close();
                 conn.Close();
             }
-            catch (Exception e)
+            catch (UsernameNotAvailable)
             {
-                Console.WriteLine(e.Message);
-                return new Users();
+                throw new UsernameNotAvailable();
             }
             return you;
         }
-        /*  CreateUser
-         *  This method will add a record to the users table in the database by implementing the SQL command
-         *      insert into P1.users(username, password, role) values(<input.username>,<input.password>, <input.role>);
-         *  As may have been noticed the role cannot be interpreted as a varchar for the database so it passes through a method to change the role to a string
-         *  This method is inside the Users class called RoleToString()
-         *  This method finally returns a boolean indicating if the user was added
-         *  If the user was not created it throws an exception that the username was not available and returns false. This is because this is the only reason a normal request would be not allowed.
-         */
-        public bool CreateUser(Users newUser)
+       
+        /// <summary>
+        /// This method will add a record to the users table in the database by implementing the SQL comment
+        ///     insert into P1.users(username, password, role) values(<input.username>,<input.password>, <input.role>);
+        ///         As you may have been noticed the role cannot be interpreted as a varchar for the database so it passes through a method to              change the role to a string
+        /// This method is inside the Users class called RoleToString()
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns>User with provided username</returns>
+        /// <exception cref="UsernameNotAvailable">Occurs if username is not found in database</exception>
+        public Users CreateUser(Users newUser)
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
             //datatype for an active connection
@@ -144,7 +138,7 @@ namespace DataAccess
                 conn.Close();
                 if (ra != 0)
                 {
-                    return true;
+                    return GetUserByUsername(newUser.username);
                 }
                 else
                 {
@@ -155,7 +149,7 @@ namespace DataAccess
             {
                 Console.WriteLine(e.Message);
             }
-            return false;
+            return new Users();
         }
     }
 }
