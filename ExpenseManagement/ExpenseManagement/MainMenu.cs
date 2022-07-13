@@ -13,9 +13,27 @@ namespace UI
     public class MainMenu
     {
         public Users Start()
-        {
-            
+        {            
             IUserDAO userDAO = new UserRepository();
+            return Entrance(userDAO);
+        }
+        public int Selection(Users user)
+        {
+            if (user.role == Role.Employee)
+            {
+               return new SecondScreen().Employee(user);
+            }
+            else
+            {
+                return new SecondScreen().Manager(user);
+            }
+        }
+        public bool TicketMenu(int selection, Users user)
+        {
+            return false; // This is simply a placeholder while I get the remainder of this menu working
+        }
+        private Users Entrance(IUserDAO userDAO)
+        {
             bool running = true;
             while (running)
             {
@@ -32,8 +50,9 @@ namespace UI
                         {
                             Console.WriteLine(e.Message);
                             break;
-                        }catch(UsernameNotAvailable e)
-                        { 
+                        }
+                        catch (UsernameNotAvailable e)
+                        {
                             Console.WriteLine(e.Message);
                             break;
                         }
@@ -42,7 +61,7 @@ namespace UI
                         {
                             return new FirstScreen().Register(userDAO);
                         }
-                        catch(UsernameNotAvailable e)
+                        catch (UsernameNotAvailable e)
                         {
                             Console.WriteLine(e.Message);
                             break;
@@ -53,21 +72,6 @@ namespace UI
                 }
             }
             throw new ResourceNotFoundException();
-        }
-        public int Selection(Users user)
-        {
-            if (user.role == Role.Employee)
-            {
-               return new SecondScreen().Employee(user);
-            }
-            else
-            {
-                return new SecondScreen().Manager(user);
-            }
-        }
-        public bool TicketMenu(int selection, Users user)
-        {
-            return false; // This is simply a placeholder while I get the remainder of this menu working
         }
     }
 }
