@@ -11,7 +11,12 @@ namespace Services
 {
     public class UserServices
     {
-        
+        private readonly IUserDAO _userDAO;
+        public UserServices(IUserDAO userDAO)
+        {
+            _userDAO = userDAO;
+        }
+
         /// <summary>
         /// Service that will retrieve a single user with a specified username, mainly used in username verification
         /// </summary>
@@ -22,7 +27,7 @@ namespace Services
         {
             try
             {
-                return new UserRepository().GetUserByUsername(username);
+                return _userDAO.GetUserByUsername(username);
             }
             catch (UsernameNotAvailable)
             {
@@ -39,7 +44,7 @@ namespace Services
         {
             try
             {
-                return new UserRepository().GetAllUsers();
+                return _userDAO.GetAllUsers();
             }
             catch (ResourceNotFoundException)
             {
@@ -66,7 +71,7 @@ namespace Services
                 }
                 else
                 {
-                    users =new UserRepository().GetUserById(userId);
+                    users =_userDAO.GetUserById(userId);
                 }
             }
             catch (ResourceNotFoundException)

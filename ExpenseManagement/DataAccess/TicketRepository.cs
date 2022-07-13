@@ -11,6 +11,12 @@ namespace DataAccess
 {
     public class TicketRepostitory: ITicketDAO
     {
+        private readonly ConnectionFactory _connectionFactory;
+        public TicketRepostitory(ConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory;
+        }
+
         /// <summary>
         /// Creates a list of all tickets in the database
         /// </summary>
@@ -20,7 +26,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.tickets;";
             //datatype for an active connection
-            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlConnection conn = _connectionFactory.GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql, conn);
             List<Tickets> tickets = new List<Tickets>();
@@ -54,7 +60,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.tickets where author = @a;";
             //datatype for an active connection
-            SqlConnection connection = ConnectionFactory.GetInstance().GetConnection();  
+            SqlConnection connection = _connectionFactory.GetConnection();  
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@a", author);
             List<Tickets> tickets = new List<Tickets>();
@@ -88,7 +94,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.tickets where ticketNum = @a;";
             //datatype for an active connection
-            SqlConnection connection = ConnectionFactory.GetInstance().GetConnection();   
+            SqlConnection connection = _connectionFactory.GetConnection();   
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@a", TicketNum);
             Tickets tickets = new Tickets();
@@ -124,7 +130,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.tickets where status = @a;";
             //datatype for an active connection
-            SqlConnection connection = ConnectionFactory.GetInstance().GetConnection(); 
+            SqlConnection connection = _connectionFactory.GetConnection(); 
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@a", (new Tickets().NumToState((int)state)));
             List<Tickets> tickets = new List<Tickets>();
@@ -157,7 +163,7 @@ namespace DataAccess
         {
             string sql= "insert into P1.tickets(author, description, amount) values(@ai, @d, @a);";
             //datatype for an active connection
-            SqlConnection connection = ConnectionFactory.GetInstance().GetConnection();    
+            SqlConnection connection = _connectionFactory.GetConnection();    
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@ai", newTicket.author);
             command.Parameters.AddWithValue("d", newTicket.description);
@@ -189,7 +195,7 @@ namespace DataAccess
         public bool UpdateTicket(Tickets update)
         {
             string sql = "update P1.tickets set status =@s,resolver = @r where ticketNum =@t;";
-            SqlConnection connection = ConnectionFactory.GetInstance().GetConnection();              //datatype to reference the sql command you want to do to a specific connection
+            SqlConnection connection = _connectionFactory.GetConnection();              //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@s", update.NumToState((int)update.status));
             command.Parameters.AddWithValue("r", update.resolver);

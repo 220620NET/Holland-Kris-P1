@@ -12,6 +12,12 @@ namespace UI
 {
     public class FirstScreen
     {
+        private readonly AuthServices _auth;
+        public FirstScreen(AuthServices auth)
+        {
+            _auth = auth;
+        }
+
         /// <summary>
         /// This will process login requests for the user from the main menu
         /// </summary>
@@ -19,7 +25,7 @@ namespace UI
         /// <returns>The user who logged in or a new </returns>
         /// <exception cref="InvalidCredentialsException">Occurs if the password does not match the entry for the provided username</exception>
         /// <exception cref="UsernameNotAvailable">Occurs if the provided username is not found in the table will suggest to the user to register an account.</exception>
-        public Users Login(IUserDAO userDAO)
+        public Users Login()
         {
             Console.WriteLine("What is you username?");
             string? username = Console.ReadLine();
@@ -28,7 +34,7 @@ namespace UI
             Users you;
             try
             {
-                you = new AuthServices(userDAO).Login(username, password);
+                you = _auth.Login(username, password);
             }
             catch (InvalidCredentialsException)
             {
@@ -40,7 +46,7 @@ namespace UI
             }
             return you;
         }
-        public Users Register(IUserDAO userDAO)
+        public Users Register()
         {
             Users newUser = new Users();
             Console.WriteLine("What do you want your username to be?");
@@ -60,7 +66,7 @@ namespace UI
             }
             try
             {
-                you2 = new AuthServices(userDAO).Register(newUser);
+                you2 = _auth.Register(newUser);
             }
             catch (UsernameNotAvailable)
             { 

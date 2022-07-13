@@ -12,10 +12,15 @@ namespace UI
 {
     public class MainMenu
     {
+        private readonly AuthServices _authServices;
+        public MainMenu(AuthServices authServices)
+        {
+            _authServices = authServices;
+        }
+
         public Users Start()
-        {            
-            IUserDAO userDAO = new UserRepository();
-            return Entrance(userDAO);
+        {           
+            return Entrance();
         }
         public int Selection(Users user)
         {
@@ -32,7 +37,7 @@ namespace UI
         {
             return false; // This is simply a placeholder while I get the remainder of this menu working
         }
-        private Users Entrance(IUserDAO userDAO)
+        private Users Entrance()
         {
             bool running = true;
             while (running)
@@ -44,7 +49,7 @@ namespace UI
                     case 1:
                         try
                         {
-                            return new FirstScreen().Login(userDAO);
+                            return new FirstScreen(_authServices).Login();
                         }
                         catch (InvalidCredentialsException e)
                         {
@@ -59,7 +64,7 @@ namespace UI
                     case 2:
                         try
                         {
-                            return new FirstScreen().Register(userDAO);
+                            return new FirstScreen(_authServices).Register();
                         }
                         catch (UsernameNotAvailable e)
                         {

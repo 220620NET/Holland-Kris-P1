@@ -6,26 +6,36 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Models;
 using CustomExceptions;
+using System.Data;
 
 namespace DataAccess
 {
     public class UserRepository: IUserDAO
     {
+        private readonly ConnectionFactory _connectionFactory;
+        public UserRepository(ConnectionFactory factory)
+        {
+            _connectionFactory = factory;
+        }
         /// <summary>
         /// This will create an instance of the SQL command SELECT * FROM P1.users;
         /// </summary>
         /// <returns>List of all users in the database</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if either the database does not exist or if the table is empty</exception>
+        /// 
         public List<Users> GetAllUsers()
         {
-            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlConnection conn = _connectionFactory.GetConnection();
+
+            conn.Open();
             string sql = "select * from P1.users;";
             SqlCommand command = new SqlCommand(sql, conn);
             List<Users> users = new List<Users>();
             Users s = new Users();
             try
             {
-                conn.Open();
+                
+                
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -52,7 +62,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.users where userID = @a;";
             //datatype for an active connection
-            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlConnection conn = _connectionFactory.GetConnection();
             SqlCommand command = new SqlCommand(sql, conn);
             command.Parameters.AddWithValue("@a", userId);
             Users you = new Users();
@@ -86,7 +96,7 @@ namespace DataAccess
         {
             string sql = "select * from P1.users where username = @a;";
             //datatype for an active connection
-            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlConnection conn = _connectionFactory.GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql,conn);
             command.Parameters.AddWithValue("@a", username);
@@ -125,7 +135,7 @@ namespace DataAccess
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
             //datatype for an active connection
-            SqlConnection conn = ConnectionFactory.GetInstance().GetConnection();
+            SqlConnection conn = _connectionFactory.GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql,conn);
             command.Parameters.AddWithValue("@u", newUser.username);

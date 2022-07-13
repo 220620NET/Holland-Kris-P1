@@ -32,7 +32,11 @@
             this.description = description;
             this.amount = amount;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public int StateToNum(string s)
         {
             switch (s)

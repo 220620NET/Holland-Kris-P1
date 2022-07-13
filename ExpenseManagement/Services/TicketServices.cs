@@ -10,7 +10,12 @@ namespace Services
 {
     public class TicketServices
     {
-        
+        private readonly ITicketDAO _ticketDAO;
+        public TicketServices(ITicketDAO ticketDAO)
+        {
+            _ticketDAO = ticketDAO;
+        }
+
         /// <summary>
         /// Service to create a ticket, will be used by the employee
         /// </summary>
@@ -21,7 +26,7 @@ namespace Services
         {
             try
             {
-                bool s =  new TicketRepostitory().CreateTicket(newTicket);
+                bool s =  _ticketDAO.CreateTicket(newTicket);
                 if (s)
                 {
                     return true;
@@ -45,7 +50,7 @@ namespace Services
         {
             try
             {
-                return new TicketRepostitory().UpdateTicket(update);
+                return _ticketDAO.UpdateTicket(update);
             }
             catch (ResourceNotFoundException)
             {
@@ -63,7 +68,7 @@ namespace Services
         {
             try
             {
-                return new TicketRepostitory().GetTicketsById(ticketID);
+                return _ticketDAO.GetTicketsById(ticketID);
             }
             catch (ResourceNotFoundException)
             {
@@ -81,7 +86,7 @@ namespace Services
         {
             try
             {
-                return new TicketRepostitory().GetTicketsByAuthor(userID);
+                return _ticketDAO.GetTicketsByAuthor(userID);
             }
             catch (ResourceNotFoundException)
             {
@@ -99,7 +104,7 @@ namespace Services
         {
             try
             {
-                return new TicketRepostitory().GetTicketsByStatus(state);
+                return _ticketDAO.GetTicketsByStatus(state);
             }
             catch (ResourceNotFoundException)
             {
