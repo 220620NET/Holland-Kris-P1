@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Models
 {
@@ -28,7 +24,7 @@ namespace Models
         }
         public Users() { }
         /// <summary>
-        /// Constructor of USers class used for Registering a new user
+        /// Constructor of Users class used for Registering a new user
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -80,8 +76,8 @@ namespace Models
             else { return "Manager"; }
         }
         public override string ToString()
-        {
-            return $"Id: {this.userId}, Name: {this.username}, Role: {this.role}";
+        { 
+            return $"Id: {this.userId}, Name: {this.username}, Role: {RoleToString(this.role)}";
         }
     }
 }

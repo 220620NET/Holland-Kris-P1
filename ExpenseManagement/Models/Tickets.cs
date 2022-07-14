@@ -20,7 +20,6 @@
             this.author = aToSet;
             this.description = dToSet;
             this.amount=amToSet;
-            this.status= Status.Pending;
         }
         //Will be used when adding from database
         public Tickets(int ticketNum, Status status, int author, int resolver, string description, decimal amount)

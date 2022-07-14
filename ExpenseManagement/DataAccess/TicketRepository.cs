@@ -108,8 +108,7 @@ namespace DataAccess
                     int k = s.StateToNum((string)reader[1]);
                     Tickets ticket =new Tickets ((int)reader[0], (Status)k, (int)reader[2], (int)reader[3], (string)reader[4], (decimal)reader[5]);
                     tickets = ticket;
-                }
-                
+                }                
                 reader.Close();
                 connection.Close();
             }
