@@ -20,6 +20,7 @@ builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<TicketServices>();
 builder.Services.AddScoped<AuthController>();
 builder.Services.AddScoped<UserController>();
+builder.Services.AddScoped<TicketController>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,17 +44,17 @@ app.MapGet("/greet", (string name, string location) => {
     return $"Hello {name} from {location}";
 });
 
+app.MapPost("/register", (Users user, AuthController controller) =>controller.Register(user));
+app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));
+
 /// <summary>
 /// Returns all users in the db
 /// </summary>
 app.MapGet("/users", (UserController controller) =>controller.GetAllUsers());
-app.MapGet("/users/{id}", (int id, UserController controller) => controller.GetUserByID(id));
+app.MapGet("/users/id/{id}", (int id, UserController controller) => controller.GetUserByID(id));
 app.MapGet("/users/name/{username}", (string username, UserController controller) => controller.GetUserByUsername(username));
-//When we ask for a reference type such as PokeTrainer as a payload
-//the framework will expect to receive this in the request body
-//The ASP.NET Core will take the json data and turn it into PokeTrainer
-//This is called "Model binding"
 
-app.MapPost("/register", (Users user, AuthController controller) =>controller.Register(user));
-app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));
+app.MapPost("/submit", (Tickets newTicket, TicketController controller) => controller.Submit(newTicket));
+app.MapPost("/process", (Tickets newTicket, TicketController controller) => controller.Submit(newTicket));
+
 app.Run();

@@ -41,7 +41,7 @@ namespace DataAccess
                 while (reader.Read())
                 {
                     int k = s.RoleToNum((string)reader[3]);
-                    users.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k));
+                    users.Add(new Users((int)reader[0], (string)reader[1],(Role)k));
                 }
                 reader.Close();
                 conn.Close();
@@ -79,7 +79,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (Role)s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();
@@ -118,7 +118,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (Role)s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();

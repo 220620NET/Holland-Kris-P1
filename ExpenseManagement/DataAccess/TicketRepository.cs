@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Data.SqlClient;
 using Models;
 using CustomExceptions;
@@ -162,6 +158,7 @@ namespace DataAccess
         {
             string sql= "insert into P1.tickets(author, description, amount) values(@ai, @d, @a);";
             //datatype for an active connection
+            List<Users> check = new UserRepository(_connectionFactory).GetAllUsers();
             SqlConnection connection = _connectionFactory.GetConnection();    
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@ai", newTicket.author);
@@ -170,21 +167,31 @@ namespace DataAccess
             try
             {
                 connection.Open();
-                int ra = command.ExecuteNonQuery();
-                connection.Close();
-                if(ra != 0)
+                if ((newTicket.author>0)&&(newTicket.author<=check.Count))
                 {
-                    return true;
+                    int ra = command.ExecuteNonQuery();
+                    connection.Close();
+                    if(ra != 0)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    throw new UsernameNotAvailable();
                 }
             }
             catch (ResourceNotFoundException)
             {
                 throw new ResourceNotFoundException();
             }
+            catch (UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
+            }
             return false;
         }
 
-        //UpdateTicket
         /// <summary>
         /// Will update a particular ticket
         /// </summary>
@@ -194,7 +201,8 @@ namespace DataAccess
         public bool UpdateTicket(Tickets update)
         {
             string sql = "update P1.tickets set status =@s,resolver = @r where ticketNum =@t;";
-            SqlConnection connection = _connectionFactory.GetConnection();              //datatype to reference the sql command you want to do to a specific connection
+            List<Users> check = new UserRepository(_connectionFactory).GetAllUsers();
+            SqlConnection connection = _connectionFactory.GetConnection();       
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@s", update.NumToState((int)update.status));
             command.Parameters.AddWithValue("r", update.resolver);
@@ -202,16 +210,27 @@ namespace DataAccess
             try
             {
                 connection.Open();
-                int ra = command.ExecuteNonQuery();
-                connection.Close();
-                if (ra != 0)
+                if ((update.author > 0) && (update.author <= check.Count))
                 {
-                    return true;
+                    int ra = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (ra != 0)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    throw new UsernameNotAvailable();
                 }
             }
             catch (ResourceNotFoundException)
             {
                 throw new ResourceNotFoundException();
+            }
+            catch (UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
             }
             return false;
 

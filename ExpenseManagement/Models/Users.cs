@@ -42,7 +42,7 @@ namespace Models
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="role"></param>
-        public Users(int userId, string username, string password, Role role)
+        public Users(int userId, string username, Role role)
         {
             this.userId = userId;
             this.username = username;

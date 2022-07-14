@@ -38,6 +38,10 @@ namespace Services
                 throw new ResourceNotFoundException();
 
             }
+            catch (UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
+            }
         }
         
         /// <summary>
@@ -55,6 +59,11 @@ namespace Services
             catch (ResourceNotFoundException)
             {
                 throw new ResourceNotFoundException();
+
+            }
+            catch (UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
             }
         }
 

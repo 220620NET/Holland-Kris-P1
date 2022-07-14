@@ -5,16 +5,16 @@ namespace WebAPI.Controllers
 {
     public class UserController
     {
-        private readonly UserServices _authServices;
+        private readonly UserServices _Services;
         public UserController(UserServices services)
         {
-            _authServices = services;
+            _Services = services;
         }
         public IResult GetAllUsers()
         {
             try
             {
-                List<Users> users = _authServices.GetAllUsers();
+                List<Users> users = _Services.GetAllUsers();
                 return Results.Accepted("/users", users);
             }
             catch (ResourceNotFoundException)
@@ -28,8 +28,8 @@ namespace WebAPI.Controllers
 
             try
             {
-                Users user = _authServices.GetUserByuserId(id);
-                return Results.Accepted("/users/{id}", user);
+                Users user = _Services.GetUserByuserId(id);
+                return Results.Accepted("/users/id/{id}", user);
             }
             catch(ResourceNotFoundException )
             {
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                Users user = _authServices.GetUserByUsername(username);
+                Users user = _Services.GetUserByUsername(username);
                 return Results.Accepted("/users/name/{username}", user);
             } 
             catch (UsernameNotAvailable)
