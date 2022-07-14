@@ -61,7 +61,7 @@ namespace Services
         /// <exception cref="ResourceNotFoundException">Occurs when Table is null</exception>
         public Users GetUserByuserId(int userId)
         {
-            Users users = new Users();
+            Users users;
             try
             {
                 List<Users> userList = GetAllUsers();
@@ -77,6 +77,10 @@ namespace Services
             catch (ResourceNotFoundException)
             {
                 throw new ResourceNotFoundException();
+            }
+            catch (UsernameNotAvailable)
+            {
+                throw new UsernameNotAvailable();
             }
             return users;
         }

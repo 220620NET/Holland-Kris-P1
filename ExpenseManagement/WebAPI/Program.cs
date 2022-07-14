@@ -48,7 +48,7 @@ app.MapGet("/greet", (string name, string location) => {
 /// </summary>
 app.MapGet("/users", (UserController controller) =>controller.GetAllUsers());
 app.MapGet("/users/{id}", (int id, UserController controller) => controller.GetUserByID(id));
-
+app.MapGet("/users/name/{username}", (string username, UserController controller) => controller.GetUserByUsername(username));
 //When we ask for a reference type such as PokeTrainer as a payload
 //the framework will expect to receive this in the request body
 //The ASP.NET Core will take the json data and turn it into PokeTrainer

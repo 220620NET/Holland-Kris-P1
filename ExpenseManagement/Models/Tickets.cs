@@ -13,6 +13,7 @@
         public int resolver { get; set; }
         public string? description { get; set; }
         public decimal amount { get; set; }
+        
         public Tickets() { }
         //Will be used when creating a ticket
         public Tickets(int aToSet, string dToSet, decimal amToSet)
@@ -21,6 +22,7 @@
             this.description = dToSet;
             this.amount=amToSet;
         }
+ 
         //Will be used when adding from database
         public Tickets(int ticketNum, Status status, int author, int resolver, string description, decimal amount)
         {

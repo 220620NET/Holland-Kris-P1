@@ -10,13 +10,47 @@ namespace WebAPI.Controllers
         {
             _authServices = services;
         }
-        public List<Users> GetAllUsers()
+        public IResult GetAllUsers()
         {
-            return _authServices.GetAllUsers();
+            try
+            {
+                List<Users> users = _authServices.GetAllUsers();
+                return Results.Accepted("/users", users);
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.NotFound("There are no users");
+            }
+           
         }
-        public Users GetUserByID(int id)
+        public IResult GetUserByID(int id)
         {
-            return _authServices.GetUserByuserId(id);
+
+            try
+            {
+                Users user = _authServices.GetUserByuserId(id);
+                return Results.Accepted("/users/{id}", user);
+            }
+            catch(ResourceNotFoundException )
+            {
+                return Results.BadRequest("NO user has that ID");
+            }
+            catch (UsernameNotAvailable)
+            {
+                return Results.BadRequest("That Id doesn't exist");
+            }
+        }
+        public IResult GetUserByUsername(string username)
+        {
+            try
+            {
+                Users user = _authServices.GetUserByUsername(username);
+                return Results.Accepted("/users/name/{username}", user);
+            } 
+            catch (UsernameNotAvailable)
+            {
+                return Results.BadRequest("That username doesn't exist");
+            }
         }
     }
 }

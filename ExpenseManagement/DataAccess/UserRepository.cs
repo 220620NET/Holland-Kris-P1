@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Models;
 using CustomExceptions;
 using System.Data;
+using System.Data.SqlTypes;
 
 namespace DataAccess
 {
@@ -71,10 +72,14 @@ namespace DataAccess
             {
                 conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                reader.Read();
+                if (!reader.HasRows)
                 {
-                    int k = s.RoleToNum((string)reader[3]);
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k);
+                    throw new ResourceNotFoundException();
+                }
+                else
+                {
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();
@@ -105,17 +110,20 @@ namespace DataAccess
             try
             {
                 conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                SqlDataReader reader = command.ExecuteReader(); 
+                reader.Read();
+                if (!reader.HasRows)
                 {
-                    int k = s.RoleToNum((string)reader[3]);
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)k);                   
+                    throw new UsernameNotAvailable();
                 }
-
+                else
+                {
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
+                }
                 reader.Close();
                 conn.Close();
             }
-            catch (UsernameNotAvailable)
+            catch (UsernameNotAvailable )
             {
                 throw new UsernameNotAvailable();
             }
