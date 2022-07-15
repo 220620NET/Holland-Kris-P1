@@ -15,8 +15,8 @@ namespace Models
         /// <summary>
         /// Constructor of Users class used for Logging in
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="username">A valid username</param>
+        /// <param name="password">A valid password</param>
         public Users(string username,string password)
         {
             this.username = username;
@@ -26,28 +26,22 @@ namespace Models
         /// <summary>
         /// Constructor of Users class used for Registering a new user
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="role"></param>
+        /// <param name="username">A valid username</param>
+        /// <param name="password">A valid password</param>
+        /// <param name="role">{employee = 0, Manager=1}</param>
         public Users(string username, string password, int role)
         {
             this.username = username;
             this.password = password;
             this.role = (Role) role;
         }
-        public Users(int userId, string username, Role role)
-        {
-            this.userId = userId;
-            this.username = username;
-            this.role = role;
-        }
         /// <summary>
         /// Constructor of Users clas used for collecting information from database in GetAllUsers methods
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="role"></param>
+        /// <param name="userId">Unique id from database</param>
+        /// <param name="username">A valid username</param>
+        /// <param name="password">A valid password</param>
+        /// <param name="role">{employee = 0, Manager=1}</param>
         public Users(int userId, string username, string password, Role role)
         {
             this.userId = userId;
@@ -58,7 +52,7 @@ namespace Models
         /// <summary>
         /// Converts a casted string from the database into an integer for reference to the Role enum
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="s">string from database</param>
         /// <returns>integer of related role</returns>
         public int RoleToNum(string s)
         {
@@ -71,7 +65,7 @@ namespace Models
         /// <summary>
         /// For putting a role into a string for the purposes of updating a user or creating a user 
         /// </summary>
-        /// <param name="role"></param>
+        /// <param name="role">The role as an enumerator</param>
         /// <returns>string representing the role of the user</returns>
         public string RoleToString(Role role)
         {

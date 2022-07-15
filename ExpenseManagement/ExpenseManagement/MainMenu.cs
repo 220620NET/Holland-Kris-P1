@@ -28,9 +28,18 @@ namespace UI
                 return new SecondScreen().Manager(user);
             }
         }
-        public bool TicketMenu(int selection, Users user)
+        public int TicketMenu(int selection, Users user)
         {
-            return false; // This is simply a placeholder while I get the remainder of this menu working
+            if (user.role == Role.Employee)
+            {
+                new IntenseMenu().ETickets(selection, user);
+            }
+            else
+            {
+                new IntenseMenu().MTickets(selection, user);
+            }
+            Console.WriteLine("Do you want to...\n1) View or manipulate other tickets\n2) Exit the program.");
+            return int.Parse(Console.ReadLine());
         }
         private Users Entrance()
         {
@@ -72,6 +81,23 @@ namespace UI
                 }
             }
             throw new ResourceNotFoundException();
+        }
+        public int Parsing()
+        {
+            int k = 0;
+            while (k == 0)
+            {
+                try
+                {
+                    return int.Parse(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("That wasn't a number");
+                    k=0;
+                }
+            }
+            return 0;
         }
     }
 }

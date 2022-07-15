@@ -14,6 +14,7 @@ namespace DataAccess
 {
     public class UserRepository: IUserDAO
     {
+        //Dependency injection
         private readonly ConnectionFactory _connectionFactory;
         public UserRepository()
         {
@@ -28,7 +29,6 @@ namespace DataAccess
         /// </summary>
         /// <returns>List of all users in the database</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if either the database does not exist or if the table is empty</exception>
-        /// 
         public List<Users> GetAllUsers()
         {
             SqlConnection conn = _connectionFactory.GetConnection();
@@ -39,9 +39,7 @@ namespace DataAccess
             List<Users> users = new List<Users>();
             Users s = new Users();
             try
-            {
-                
-                
+            { 
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -61,7 +59,7 @@ namespace DataAccess
         /// <summary>
         /// This method will create an instance of the SQL command SELECT*FROM P1.users WHERE userID = <input>"userID"</input>
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">A valid userID</param>
         /// <returns></returns>
         /// <exception cref="ResourceNotFoundException">Occurs if the userId does not exist in the table</exception>
         public Users GetUserById(int userId)
@@ -99,9 +97,10 @@ namespace DataAccess
         /// <summary>
         /// This method will create an instance of the SQL command SELECT*FROM P1.users WHERE username=<input>param</input>
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="username">A valid username</param>
         /// <returns>User with specified username</returns>
-        /// <exception cref="UsernameNotAvailable">Occurs if the username is not in the database</exception>
+        /// <exception cref="UsernameNotAvailable">Occurs if the username is not valid</exception>
+        /// <exception cref="ResourceNotFoundException">Occurs if the username is not in the database</exception>
         public Users GetUserByUsername(string username)
         {
             string sql = "select * from P1.users where username = @a;";
@@ -140,14 +139,12 @@ namespace DataAccess
         }
        
         /// <summary>
-        /// This method will add a record to the users table in the database by implementing the SQL comment
-        ///     insert into P1.users(username, password, role) values(<input.username>,<input.password>, <input.role>);
-        ///         As you may have been noticed the role cannot be interpreted as a varchar for the database so it passes through a method to              change the role to a string
-        /// This method is inside the Users class called RoleToString()
+        /// Method to create a new user replicating the insert into DML command
         /// </summary>
-        /// <param name="newUser"></param>
-        /// <returns>User with provided username</returns>
-        /// <exception cref="UsernameNotAvailable">Occurs if username is not found in database</exception>
+        /// <param name="newUser">A new user with no specified userID</param>
+        /// <returns>The user after being created</returns>
+        /// <exception cref="UsernameNotAvailable"></exception>
+        
         public Users CreateUser(Users newUser)
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
@@ -165,18 +162,24 @@ namespace DataAccess
                 conn.Close();
                 if (ra != 0)
                 {
-                    return GetUserByUsername(newUser.username);
+                    if (newUser.username != null)
+                    {
+                        return GetUserByUsername(newUser.username);
+                    }
+                    else
+                    {
+                        throw new UsernameNotAvailable();
+                    }
                 }
                 else
                 {
                     throw new UsernameNotAvailable();
                 }
             }
-            catch (UsernameNotAvailable e)
+            catch (UsernameNotAvailable)
             {
-                Console.WriteLine(e.Message);
-            }
-            return new Users();
+                throw new UsernameNotAvailable();
+            } 
         }
     }
 }

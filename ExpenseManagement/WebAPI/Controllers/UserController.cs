@@ -5,11 +5,17 @@ namespace WebAPI.Controllers
 {
     public class UserController
     {
+        //Dependency Injection
         private readonly UserServices _Services;
         public UserController(UserServices services)
         {
             _Services = services;
         }
+        /// <summary>
+        /// Controller that will grab all users 
+        /// </summary>
+        /// <returns>Status Code 202 if successful</returns>
+        /// <remarks>returns Status Code 404 if there are no users in the table, should never be seen</remarks>
         public IResult GetAllUsers()
         {
             try
@@ -23,6 +29,12 @@ namespace WebAPI.Controllers
             }
            
         }
+        /// <summary>
+        /// Controller to retrieve a particular user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Status Code 202 if the user exists and could be retrieved</returns>
+        /// <remarks>returns Status Code 400 if there is no user with that userId</remarks>
         public IResult GetUserByID(int id)
         {
 
@@ -40,6 +52,12 @@ namespace WebAPI.Controllers
                 return Results.BadRequest("That Id doesn't exist");
             }
         }
+        /// <summary>
+        /// Controller to retrieve a particular user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Status Code 202 if the user exists and could be retrieved</returns>
+        /// <remarks>returns Status Code 400 if there is no user with that username </remarks>
         public IResult GetUserByUsername(string username)
         {
             try

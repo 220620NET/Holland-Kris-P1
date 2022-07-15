@@ -2,12 +2,19 @@
 using System.Data.SqlClient;
 using Models;
 using CustomExceptions;
+using sensitive;
 
 namespace DataAccess
 {
     public class TicketRepostitory: ITicketDAO
     {
+        //Dependency injection
         private readonly ConnectionFactory _connectionFactory;
+        public TicketRepostitory()
+        {
+        _connectionFactory = ConnectionFactory.GetInstance($"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        }
+        
         public TicketRepostitory(ConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -49,7 +56,7 @@ namespace DataAccess
         /// <summary>
         /// Selects all tickets based on the employee id who authored the ticket
         /// </summary>
-        /// <param name="author"></param>
+        /// <param name="author">The userID of the author of a set of tickets</param>
         /// <returns>All tickets authored by the given id</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if the author has not generated any tickets</exception>
         public List<Tickets> GetTicketsByAuthor(int author)
@@ -83,7 +90,7 @@ namespace DataAccess
         /// <summary>
         /// Searches the database for a particualar ticket
         /// </summary>
-        /// <param name="TicketNum"></param>
+        /// <param name="TicketNum">The unique identifier of a Ticket</param>
         /// <returns>The specified ticket</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if that ticket does not exist</exception>
         public Tickets GetTicketsById(int TicketNum)
@@ -118,7 +125,7 @@ namespace DataAccess
         /// <summary>
         /// Searches for ticket of a particular status in the database
         /// </summary>
-        /// <param name="state"></param>
+        /// <param name="state">The state of a ticket{Pending = 0, Approved = 1, Denied = 2}</param>
         /// <returns>List of tickets with a particular status</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if there are no tickets with the specified status</exception>
         public List<Tickets> GetTicketsByStatus(int state)
@@ -151,7 +158,7 @@ namespace DataAccess
         /// <summary>
         /// Generates a new ticket
         /// </summary>
-        /// <param name="newTicket"></param>
+        /// <param name="newTicket">A new ticket with valid information{Author, description, amount}</param>
         /// <returns>boolean stating true if ticket was generated, false otherwise</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if the ticket could not be generated</exception>
         public bool CreateTicket(Tickets newTicket)
@@ -195,9 +202,10 @@ namespace DataAccess
         /// <summary>
         /// Will update a particular ticket
         /// </summary>
-        /// <param name="update"></param>
+        /// <param name="update">A ticket with the additional parameters that should be updated {Resolver, Status}</param>
         /// <returns>boolean where true if ticket was updated, false otherwise</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if no ticket matches that specification</exception>
+        /// <exception cref="UsernameNotAvailable">Occurs if there is no ticket with that number</exception>
         public bool UpdateTicket(Tickets update)
         {
             string sql = "update P1.tickets set status =@s,resolver = @r where ticketNum =@t;";

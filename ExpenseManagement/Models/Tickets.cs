@@ -14,8 +14,14 @@
         public string? description { get; set; }
         public decimal amount { get; set; }
         
-        public Tickets() { }
-        //Will be used when creating a ticket
+        public Tickets() { } 
+
+        /// <summary>
+        /// Constructor for creating a ticket
+        /// </summary>
+        /// <param name="aToSet">A valid user who authored this ticket</param>
+        /// <param name="dToSet">A reason for the ticket</param>
+        /// <param name="amToSet">The amount of money this ticket is worth</param>
         public Tickets(int aToSet, string dToSet, decimal amToSet)
         {
             this.author = aToSet;
@@ -23,7 +29,15 @@
             this.amount=amToSet;
         }
  
-        //Will be used when adding from database
+        /// <summary>
+        /// Constructor for updating and pulling tickets
+        /// </summary>
+        /// <param name="ticketNum">A unique identifier for the ticket from the Database</param>
+        /// <param name="status">The status of the ticket saved as an enumerator{Pending = 0, Approved =1, Denied = 2}</param>
+        /// <param name="author">A valid user who authored this ticket</param>
+        /// <param name="resolver">A valid user who resolved this ticket</param>
+        /// <param name="description">A reason for the ticket</param>
+        /// <param name="amount">The amount of money this ticket is worth</param>
         public Tickets(int ticketNum, Status status, int author, int resolver, string description, decimal amount)
         {
             this.ticketNum = ticketNum;
@@ -34,10 +48,10 @@
             this.amount = amount;
         }
         /// <summary>
-        /// 
+        /// Method of transfering the string from the database representing the status of the ticket into an int
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
+        /// <param name="s">String representing the status of the ticket</param>
+        /// <returns>Integer representing the status of the ticket {Pending=0, Approved=1, Denied =2}</returns>
         public int StateToNum(string s)
         {
             switch (s)
@@ -50,6 +64,11 @@
                     return 0;
             }
         }
+        /// <summary>
+        /// Method of transfering the int corresponding to the status of the ticket into a string for the database representing the status of the ticket
+        /// </summary>
+        /// <param name="k">{Pending = 0, Approved =1, Denied =2}</param>
+        /// <returns>String representing the status of the ticket</returns>
         public string NumToState(int k)
         {
             switch (k)

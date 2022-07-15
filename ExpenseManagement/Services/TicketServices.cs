@@ -10,6 +10,7 @@ namespace Services
 {
     public class TicketServices
     {
+        //Dependency injection
         private readonly ITicketDAO _ticketDAO;
         public TicketServices(ITicketDAO ticketDAO)
         {

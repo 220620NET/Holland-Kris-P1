@@ -25,14 +25,17 @@ namespace UI
             string? username = Console.ReadLine();
             Console.WriteLine("What is you password");
             string? password = Console.ReadLine();
-            Users you;
             try
             {
+                if (username == null || password == null) 
+                {
+                    throw new InvalidCredentialsException();
+                }
                return _auth.Login(username, password);
             }
             catch (InvalidCredentialsException)
             {
-                throw new InvalidCredentialsException("Sorry that password does not match the username");
+                throw new InvalidCredentialsException("Sorry that password does not match the username or you forgot to enter a password or username");
             }
             catch (UsernameNotAvailable)
             {
