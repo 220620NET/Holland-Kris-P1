@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using sensitive;
 using Models;
 using CustomExceptions;
 using System.Data;
@@ -14,6 +15,10 @@ namespace DataAccess
     public class UserRepository: IUserDAO
     {
         private readonly ConnectionFactory _connectionFactory;
+        public UserRepository()
+        {
+            _connectionFactory = ConnectionFactory.GetInstance($"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        }
         public UserRepository(ConnectionFactory factory)
         {
             _connectionFactory = factory;
@@ -41,7 +46,7 @@ namespace DataAccess
                 while (reader.Read())
                 {
                     int k = s.RoleToNum((string)reader[3]);
-                    users.Add(new Users((int)reader[0], (string)reader[1],(Role)k));
+                    users.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2],(Role)k));
                 }
                 reader.Close();
                 conn.Close();
@@ -79,7 +84,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();
@@ -105,7 +110,7 @@ namespace DataAccess
             //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql,conn);
             command.Parameters.AddWithValue("@a", username);
-            Users you = new Users();
+            Users you;
             Users s = new Users();
             try
             {
@@ -118,7 +123,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();

@@ -35,6 +35,12 @@ namespace Models
             this.password = password;
             this.role = (Role) role;
         }
+        public Users(int userId, string username, Role role)
+        {
+            this.userId = userId;
+            this.username = username;
+            this.role = role;
+        }
         /// <summary>
         /// Constructor of Users clas used for collecting information from database in GetAllUsers methods
         /// </summary>
@@ -42,7 +48,7 @@ namespace Models
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="role"></param>
-        public Users(int userId, string username, Role role)
+        public Users(int userId, string username, string password, Role role)
         {
             this.userId = userId;
             this.username = username;

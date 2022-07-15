@@ -11,7 +11,7 @@ namespace DataAccess
         public bool UpdateTicket(Tickets newTicket);
         public Tickets GetTicketsById(int ticketNum);
         public List<Tickets> GetTicketsByAuthor(int authorId);
-        public List<Tickets> GetTicketsByStatus(Status state);
+        public List<Tickets> GetTicketsByStatus(int state);
     }
     /// <summary>
     /// Interface for the User Repository class

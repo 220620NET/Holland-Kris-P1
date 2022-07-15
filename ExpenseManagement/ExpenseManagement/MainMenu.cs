@@ -38,7 +38,7 @@ namespace UI
             while (running)
             {
                 Console.WriteLine("Welcome to the EMS!\nWould you like to [Press either 1 or 2]:\n1) Login\n2) Register");
-                int option = int.Parse(Console.ReadLine());
+                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
                     case 1:

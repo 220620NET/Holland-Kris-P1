@@ -4,5 +4,4 @@ using Models;
 using Services;
 using DataAccess;
 
-
-
+new MainMenu(new AuthServices(new UserRepository())).Start();

@@ -66,7 +66,8 @@ namespace Services
                 }
                 else
                 {
-                    return _user.CreateUser(newUser);
+                    Users user = _user.CreateUser(newUser);
+                    return user;
                 }
             }catch(UsernameNotAvailable)
             {

@@ -28,7 +28,7 @@ namespace UI
             Users you;
             try
             {
-                you = _auth.Login(username, password);
+               return _auth.Login(username, password);
             }
             catch (InvalidCredentialsException)
             {
@@ -37,8 +37,7 @@ namespace UI
             catch (UsernameNotAvailable)
             {
                 throw new UsernameNotAvailable("That Username does not exist in the database");
-            }
-            return you;
+            } 
         }
         public Users Register()
         {
@@ -60,13 +59,12 @@ namespace UI
             }
             try
             {
-                you2 = _auth.Register(newUser);
+                return _auth.Register(newUser);
             }
             catch (UsernameNotAvailable)
             { 
                 throw new UsernameNotAvailable("An account with that username already exists.");
-            }
-            return you2;
+            } 
         }
     }
 }

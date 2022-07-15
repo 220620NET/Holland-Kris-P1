@@ -109,7 +109,7 @@ namespace Services
         /// <param name="state"></param>
         /// <returns>List of tickets with a specified status</returns>
         /// <exception cref="ResourceNotFoundException">Occurs when there are no such tickets with that status</exception>
-        public List<Tickets> GetReimbursementByStatus(Status state)
+        public List<Tickets> GetReimbursementByStatus(int state)
         {
             try
             {

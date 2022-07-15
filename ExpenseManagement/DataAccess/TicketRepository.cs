@@ -121,13 +121,13 @@ namespace DataAccess
         /// <param name="state"></param>
         /// <returns>List of tickets with a particular status</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if there are no tickets with the specified status</exception>
-        public List<Tickets> GetTicketsByStatus(Status state)
+        public List<Tickets> GetTicketsByStatus(int state)
         {
             string sql = "select * from P1.tickets where status = @a;";
             //datatype for an active connection
             SqlConnection connection = _connectionFactory.GetConnection(); 
             SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@a", (new Tickets().NumToState((int)state)));
+            command.Parameters.AddWithValue("@a", (new Tickets().NumToState(state)));
             List<Tickets> tickets = new List<Tickets>();
             Tickets s = new Tickets();
             try
@@ -205,13 +205,17 @@ namespace DataAccess
             SqlConnection connection = _connectionFactory.GetConnection();       
             SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@s", update.NumToState((int)update.status));
-            command.Parameters.AddWithValue("r", update.resolver);
-            command.Parameters.AddWithValue("t", update.ticketNum);
+            command.Parameters.AddWithValue("@r", update.resolver);
+            command.Parameters.AddWithValue("@t", update.ticketNum);
             try
             {
                 connection.Open();
                 if ((update.author > 0) && (update.author <= check.Count))
                 {
+                    if(GetTicketsById(update.ticketNum).status==Status.Approved || GetTicketsById(update.ticketNum).status == Status.Denied)
+                    {
+                        return false;
+                    }
                     int ra = command.ExecuteNonQuery();
                     connection.Close();
                     if (ra != 0)
