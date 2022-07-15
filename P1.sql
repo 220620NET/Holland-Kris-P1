@@ -16,8 +16,10 @@ insert into P1.users(username,password, role) values ('Juniper', 'password','Man
 select * from P1.users where username = 'Kris';
 -- GetUserByID()
 select * from P1.users where userID =1;
+delete from P1.users is test;
+alter table P1.users add test varchar(50);
 
-
+select * from P1.users where userID  = 0;
 
 create table P1.tickets(
 	ticketNum int identity primary key,

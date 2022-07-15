@@ -119,7 +119,7 @@ namespace DataAccess
                 reader.Read();
                 if (!reader.HasRows)
                 {
-                    throw new UsernameNotAvailable();
+                    throw new ResourceNotFoundException();
                 }
                 else
                 {
@@ -131,6 +131,10 @@ namespace DataAccess
             catch (UsernameNotAvailable )
             {
                 throw new UsernameNotAvailable();
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
             }
             return you;
         }

@@ -7,6 +7,10 @@ namespace Services
     {
         private readonly IUserDAO _user;
         // Dependency Injection
+        public AuthServices()
+        {
+            _user = new UserRepository();
+        }
         public AuthServices(IUserDAO userDao)
         {
             _user = userDao;
@@ -71,8 +75,12 @@ namespace Services
                 }
             }catch(UsernameNotAvailable)
             {
-                throw new UsernameNotAvailable();                
-            }            
+                throw new UsernameNotAvailable();
+            }
+            catch (ResourceNotFoundException)
+            {
+                return _user.CreateUser(newUser);
+            }      
         }
     }
 }
