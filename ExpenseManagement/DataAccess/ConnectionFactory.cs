@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Data.SqlClient;
 using sensitive;
 
@@ -15,7 +11,9 @@ namespace DataAccess
         //Dependency Injection
         private static ConnectionFactory? _instance;
         private readonly string _connectionString;
-
+        public ConnectionFactory(){
+            _connectionString = $"Server=tcp:kserverh.database.windows.net,1433;Initial Catalog=KrisDB;Persist Security Info=False;User ID=sqluser;Password={SensitiveVariables.dbpassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        }
         private ConnectionFactory(string connectionString)
         {
             _connectionString = connectionString;
@@ -47,4 +45,4 @@ namespace DataAccess
             return new SqlConnection(_connectionString);
         }
     }
- }
+}

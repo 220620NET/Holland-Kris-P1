@@ -7,9 +7,11 @@ namespace WebAPI.Controllers
     {
         //Dependency injection
         private readonly AuthServices _authServices;
-        public AuthController(AuthServices services)
+        private readonly UserServices _userServices;
+        public AuthController(AuthServices services, UserServices userServices)
         {
             _authServices = services;
+            _userServices = userServices;   
         }
         /// <summary>
         /// Controller to register a new user
@@ -22,6 +24,7 @@ namespace WebAPI.Controllers
             try
             {
                 _authServices.Register(user);
+                user =_userServices.GetUserByUsername(user.username);
                 return Results.Created("/register", user);
             }
             catch (UsernameNotAvailable)
@@ -40,7 +43,7 @@ namespace WebAPI.Controllers
             try
             {  
                 user = _authServices.Login(user.username, user.password);
-                return Results.Ok("Welcome " +user.ToString());
+                return Results.Ok(user);
             }
             catch (InvalidCredentialsException)
             {

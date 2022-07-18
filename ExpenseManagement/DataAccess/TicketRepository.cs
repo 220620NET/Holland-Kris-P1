@@ -218,7 +218,7 @@ namespace DataAccess
             try
             {
                 connection.Open();
-                if ((update.author > 0) && (update.author <= check.Count))
+                if ((update.ticketNum > 0) && (update.ticketNum <= check.Count))
                 {
                     if(GetTicketsById(update.ticketNum).status==Status.Approved || GetTicketsById(update.ticketNum).status == Status.Denied)
                     {

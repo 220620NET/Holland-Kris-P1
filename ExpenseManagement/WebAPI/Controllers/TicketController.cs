@@ -120,5 +120,17 @@ namespace WebAPI.Controllers
                 return Results.BadRequest($"There are no tickets that are {new Tickets().NumToState(s)}.");
             }
         }
+        public IResult GetAllTickets()
+        {
+            try
+            {
+                List<Tickets> all = _Services.GetAllTickets();
+                return Results.Accepted("/tickets", all);
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.BadRequest("There are no tickets");
+            }
+        }
     }
 }

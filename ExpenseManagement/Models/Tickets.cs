@@ -15,20 +15,23 @@
         public decimal amount { get; set; }
         
         public Tickets() { } 
-
         /// <summary>
         /// Constructor for creating a ticket
         /// </summary>
         /// <param name="aToSet">A valid user who authored this ticket</param>
         /// <param name="dToSet">A reason for the ticket</param>
         /// <param name="amToSet">The amount of money this ticket is worth</param>
-        public Tickets(int aToSet, string dToSet, decimal amToSet)
+        public Tickets(int aToSet, string? dToSet, decimal amToSet)
         {
             this.author = aToSet;
             this.description = dToSet;
             this.amount=amToSet;
         }
- 
+        
+        public Tickets(Status state, int resolver){
+            this.status=state;
+            this.resolver=resolver;
+        }
         /// <summary>
         /// Constructor for updating and pulling tickets
         /// </summary>
@@ -38,7 +41,7 @@
         /// <param name="resolver">A valid user who resolved this ticket</param>
         /// <param name="description">A reason for the ticket</param>
         /// <param name="amount">The amount of money this ticket is worth</param>
-        public Tickets(int ticketNum, Status status, int author, int resolver, string description, decimal amount)
+        public Tickets(int ticketNum, Status status, int author, int resolver, string? description, decimal amount)
         {
             this.ticketNum = ticketNum;
             this.status = status;
@@ -81,6 +84,7 @@
                     return "Pending";
             }
         }
+        
         public override string ToString()
         {
             return $"Ticket Number: {this.ticketNum}\nStatus: {this.status}\nAuthor: {this.author}\nResolver: {this.resolver}\nDescription: {this.description}\n Amount: {this.amount}";

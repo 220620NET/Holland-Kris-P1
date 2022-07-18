@@ -121,5 +121,17 @@ namespace Services
                 throw new ResourceNotFoundException();
             }
         }
+
+        public List<Tickets> GetAllTickets()
+        {
+            try
+            {
+                return _ticketDAO.GetAllTickets();
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
     }
 }

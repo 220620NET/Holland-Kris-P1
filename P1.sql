@@ -10,16 +10,17 @@ create table P1.users(
 select * from P1.users;
 drop table P1.users; -- For fixing errors if they occur
 --CreateUser()
-insert into P1.users(username,password) values ('Kris','password');
+insert into P1.users(username,password) values ('Kris','password'); --employee
 insert into P1.users(username,password, role) values ('Juniper', 'password','Manager');
 -- GetUserByUsername()
 select * from P1.users where username = 'Kris';
 -- GetUserByID()
 select * from P1.users where userID =1;
+-- Creating columns after table creation
 delete from P1.users is test;
 alter table P1.users add test varchar(50);
 
-select * from P1.users where userID  = 0;
+select * from P1.users where userID  = 0; --checking a possible null response
 
 create table P1.tickets(
 	ticketNum int identity primary key,
@@ -31,13 +32,14 @@ create table P1.tickets(
 );
 --GetAllTickets()
 select * from P1.tickets;
+-- For fixing errors
 drop table P1.tickets;
 -- CreateTicket()
 insert into P1.tickets(author,description, amount) values (1,'Testing Ticket table',18.32);
 -- UpdateTicket()
 update P1.tickets set status ='Approved',resolver = 2 where ticketNum =1;
 -- GetTicketByAuthor()
-select * from P1.tickets where author = 'Kris';
+select * from P1.tickets where author = 1;
 -- GetTicketByStatus()
 select * from P1.tickets where status = 'Pending';
 -- GetTicketByID()

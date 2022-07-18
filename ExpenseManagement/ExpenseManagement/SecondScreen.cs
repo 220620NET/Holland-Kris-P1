@@ -11,7 +11,7 @@ namespace UI
     {
         public int Employee(Users user)
         {
-            Console.WriteLine($"Welcome {user.userId}!\nWhat would you like to do today?\n 1) View Tickets\n2) Create a Ticket");
+            Console.WriteLine($"Welcome {user.role} {user.userId}!\nWhat would you like to do today?\n 1) View Tickets\n2) Create a Ticket");
             if (int.Parse(Console.ReadLine()) == 1)
             {
                 Console.WriteLine("Would you like those organized in a particular fashion?\n1) Collected by Status\n2) View a single ticket\n3) No Particular collection");

@@ -1,103 +1,51 @@
-﻿
+﻿using CustomExceptions;
+using System.Text.Json;
+using System.Text;
+using System.Net.Http;
 using Models;
-using Services;
-using CustomExceptions;
 
-namespace UI
+namespace ConsoleFrontEnd
 {
     public class MainMenu
     {
-        private readonly AuthServices _authServices;
-        public MainMenu(AuthServices authServices)
+        public MainMenu() { }
+        private readonly string api = "https://expensemanagementp1.azurewebsites.net/";
+        public async Task<Users> Start()
         {
-            _authServices = authServices;
-        }
-
-        public Users Start()
-        {           
-            return Entrance();
-        }
-        public int Selection(Users user)
-        {
-            if (user.role == Role.Employee)
+            Console.WriteLine("Welcome!\nWould you like to...\n1) Login\n2) Register");
+            Users you;
+            int first = int.Parse(Console.ReadLine());
+            FirstScreen firstScreen = new FirstScreen();
+            if (first == 1)
             {
-               return new SecondScreen().Employee(user);
+                return await firstScreen.Login(api);
+            }
+            else if (first == 2)
+            {
+                return await firstScreen.Register(api);
+            }
+            return new Users();
+        }
+        public async Task<bool> Selection(Users you)
+        {
+            if (you.role == Role.Employee)
+            {
+                await new TicketMenu().ETicket(you,api);
             }
             else
             {
-                return new SecondScreen().Manager(user);
+                await new TicketMenu().MTicket(you,api);
             }
-        }
-        public int TicketMenu(int selection, Users user)
-        {
-            if (user.role == Role.Employee)
+            Console.WriteLine("Would you like to do more things? [y/n]");
+            char s = Console.ReadLine().ToLower()[0];
+            if (s == 'y')
             {
-                new IntenseMenu().ETickets(selection, user);
+                return true;
             }
             else
             {
-                new IntenseMenu().MTickets(selection, user);
+                return false;
             }
-            Console.WriteLine("Do you want to...\n1) View or manipulate other tickets\n2) Exit the program.");
-            return int.Parse(Console.ReadLine());
         }
-        private Users Entrance()
-        {
-            bool running = true;
-            while (running)
-            {
-                Console.WriteLine("Welcome to the EMS!\nWould you like to [Press either 1 or 2]:\n1) Login\n2) Register");
-                 int option = int.Parse(Console.ReadLine());
-                switch (option)
-                {
-                    case 1:
-                        try
-                        {
-                            return new FirstScreen(_authServices).Login();
-                        }
-                        catch (InvalidCredentialsException e)
-                        {
-                            Console.WriteLine(e.Message);
-                            break;
-                        }
-                        catch (UsernameNotAvailable e)
-                        {
-                            Console.WriteLine(e.Message);
-                            break;
-                        }
-                    case 2:
-                        try
-                        {
-                            return new FirstScreen(_authServices).Register();
-                        }
-                        catch (UsernameNotAvailable e)
-                        {
-                            Console.WriteLine(e.Message);
-                            break;
-                        }
-                    default:
-                        Console.WriteLine("I did not understand your input.");
-                        break;
-                }
-            }
-            throw new ResourceNotFoundException();
-        }
-        public int Parsing()
-        {
-            int k = 0;
-            while (k == 0)
-            {
-                try
-                {
-                    return int.Parse(Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("That wasn't a number");
-                    k=0;
-                }
-            }
-            return 0;
-        }
-    }
+    }        
 }

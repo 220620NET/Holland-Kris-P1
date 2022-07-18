@@ -66,4 +66,5 @@ app.MapPost("/process", (Tickets newTicket, TicketController controller) => cont
 app.MapGet("/tickets/author/{authorID}", (int authorID, TicketController controller) => controller.GetTicketByAuthor(authorID));
 app.MapGet("/tickets/id/{ticketNum}", (int ticketNum, TicketController controller) => controller.GetTicketByTicketNum(ticketNum));
 app.MapGet("/tickets/status/{state}", (string state, TicketController controller) => controller.GetTicketByStatus(state));
+app.MapGet("/tickets", (TicketController controller) => controller.GetAllTickets());
 app.Run();

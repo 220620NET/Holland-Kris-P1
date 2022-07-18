@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using sensitive;
 using Models;
-using CustomExceptions;
-using System.Data;
-using System.Data.SqlTypes;
+using CustomExceptions; 
 
 namespace DataAccess
 {
@@ -44,7 +37,7 @@ namespace DataAccess
                 while (reader.Read())
                 {
                     int k = s.RoleToNum((string)reader[3]);
-                    users.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2],(Role)k));
+                    users.Add(new Users((int)reader[0], (string)reader[1], (string)reader[2],k));
                 }
                 reader.Close();
                 conn.Close();
@@ -82,7 +75,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();
@@ -122,7 +115,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], (Role)s.RoleToNum((string)reader[3]));
+                    you = new Users((int)reader[0], (string)reader[1], (string)reader[2], s.RoleToNum((string)reader[3]));
                 }
                 reader.Close();
                 conn.Close();

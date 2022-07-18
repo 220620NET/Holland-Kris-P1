@@ -1,16 +1,21 @@
-﻿
+﻿using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace Models
 {
     public enum Role
     {
-        Employee,Manager
+        //[EnumMember(Value = "Employee")]
+        Employee,
+        //[EnumMember(Value = "Manager")]
+        Manager
     }
     public class Users
     {
         public int userId { get; set; }
         public string? username { get; set; }
         public string? password { get; set; }
+
         public Role role { get; set; }
         /// <summary>
         /// Constructor of Users class used for Logging in
@@ -42,12 +47,12 @@ namespace Models
         /// <param name="username">A valid username</param>
         /// <param name="password">A valid password</param>
         /// <param name="role">{employee = 0, Manager=1}</param>
-        public Users(int userId, string username, string password, Role role)
+        public Users(int userId, string username, string password, int role)
         {
             this.userId = userId;
             this.username = username;
             this.password = password;
-            this.role = role;
+            this.role = (Role)role;
         }
         /// <summary>
         /// Converts a casted string from the database into an integer for reference to the Role enum
