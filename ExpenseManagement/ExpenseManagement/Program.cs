@@ -9,11 +9,12 @@ using ConsoleFrontEnd;
  *  
  *  The menu will loop as long as the user wants to view things
  */
-
-Users me = await new MainMenu().Start();
-bool running;
-do
+while (true)
 {
-    running = await new MainMenu().Selection(me);
-} while (running);
-Console.WriteLine("GoodBye");
+    Users me = await new MainMenu().Start();
+    bool running;
+    do
+    {
+        running = await new MainMenu().Selection(me);
+    } while (running);
+}
