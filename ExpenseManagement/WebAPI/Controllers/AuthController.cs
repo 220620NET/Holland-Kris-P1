@@ -23,6 +23,7 @@ namespace WebAPI.Controllers
         {
             try
             {
+                user.username = user.username != null ? user.username : "";
                 _authServices.Register(user);
                 user =_userServices.GetUserByUsername(user.username);
                 return Results.Created("/register", user);
@@ -41,7 +42,9 @@ namespace WebAPI.Controllers
         public IResult Login(Users user)
         {
             try
-            {  
+            {
+                user.username = user.username != null ? user.username : "";
+                user.password = user.password != null ? user.password : "";
                 user = _authServices.Login(user.username, user.password);
                 return Results.Ok(user);
             }

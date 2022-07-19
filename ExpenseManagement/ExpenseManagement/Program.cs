@@ -1,6 +1,19 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Models;
+﻿using Models;
 using ConsoleFrontEnd;
-//new MainMenu(new AuthServices(new UserRepository())).Start();
+
+/* Console Front End
+ * 
+ *  This will be how the user directly interacts with the menus and tickets
+ *      An employee will only see their information
+ *      A manager can see everything
+ *  
+ *  The menu will loop as long as the user wants to view things
+ */
+
 Users me = await new MainMenu().Start();
-await new MainMenu().Selection(me);
+bool running;
+do
+{
+    running = await new MainMenu().Selection(me);
+} while (running);
+Console.WriteLine("GoodBye");

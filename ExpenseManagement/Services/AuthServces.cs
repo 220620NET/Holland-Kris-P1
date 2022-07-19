@@ -24,11 +24,13 @@ namespace Services
         /// <returns>User record from the database concurrent with the provided inputs</returns>
         /// <exception cref="ResourceNotFoundException">Occurs if the username does not exist in the database</exception>
         /// <exception cref="InvalidCredentialsException">Occurs if the username and password do not match</exception>
-        public Users Login(string username, string password)
+        public Users Login(string? username, string? password)
         {
             Users user;
             try
             {
+                username = username != null ? username : "";
+                password = password != null ? password : "";
                 user = _user.GetUserByUsername(username);
                 if (user.username == "")
                 {
@@ -59,6 +61,7 @@ namespace Services
         {
             try
             {
+                newUser.username = newUser.username != null ? newUser.username : "";
                 Users test = _user.GetUserByUsername(newUser.username);
                 if (test.username == newUser.username)
                 {

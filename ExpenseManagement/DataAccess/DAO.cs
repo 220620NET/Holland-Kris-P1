@@ -19,8 +19,8 @@ namespace DataAccess
     public interface IUserDAO
     {
         public List<Users> GetAllUsers();
-        public Users GetUserById(int userId);
-        public Users GetUserByUsername(string userName);
+        public Users GetUserById(int? userId);
+        public Users GetUserByUsername(string? userName);
         public Users CreateUser(Users user);
     }
 }

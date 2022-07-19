@@ -9,20 +9,30 @@ namespace ConsoleFrontEnd
 {
     public class TicketMenu
     {
+        /// <summary>
+        /// This will talk with the website and will operate as a selection screen for the employee
+        /// </summary>
+        /// <param name="you">The currect User</param>
+        /// <param name="api">The url for the website</param>
+        /// <returns></returns>
         public async Task ETicket(Users you,string api)
         {
             Console.WriteLine($"Welcome {you.role} # {you.userId}!\nWhat would you like to do today?\n1) View Tickets\n2) Create a Ticket");
-            if (int.Parse(Console.ReadLine()) == 1)
+            if ((int)new WarningFixer().Parsing() == 1)
             {
                 Console.WriteLine("Would you like those organized in a particular fashion?\n1) Collected by Status\n2) View a single ticket\n3) No Particular collection");
-                int sel = int.Parse(Console.ReadLine());
+                int sel = (int) new WarningFixer().Parsing();
                 switch (sel)
                 {
                     case 1:
                         Console.WriteLine("What status do you want to see? [Pending, Approved, Denied]");
-                        string state = Console.ReadLine();
+                        string? state = Console.ReadLine();
                         try
                         {
+                            if (state == null)
+                            {
+                                throw new ResourceNotFoundException();
+                            }
                             List<Tickets> TicksByStat = await new EmployeeGets().GetTicketsByState(you, state,api);
                             foreach (Tickets t in TicksByStat)
                             {
@@ -36,7 +46,7 @@ namespace ConsoleFrontEnd
                         break;
                     case 2:
                         Console.WriteLine("Which ticket would you like to see? [Please enter the ticket id]");
-                        int which = int.Parse(Console.ReadLine());
+                        int which = (int)new WarningFixer().Parsing();
                         try
                         {
                             Tickets thisOne = await new Gets().GetTicketsByTicketNum(which,api);
@@ -69,8 +79,10 @@ namespace ConsoleFrontEnd
             else
             {
                 Console.WriteLine("How much would you like to make this reimbursement out for");
-                Tickets ticketToCreate = new Tickets(0,Status.Pending,you.userId,2,"",0);
-                ticketToCreate.amount = decimal.Parse(Console.ReadLine());
+                Tickets ticketToCreate = new(0, Status.Pending, you.userId, 2, "", 0)
+                {
+                    amount = new WarningFixer().Parsing()
+                };
                 Console.WriteLine($"Why are you requesting {ticketToCreate.amount}? ");
                 ticketToCreate.description = Console.ReadLine();
                 ticketToCreate.author = you.userId;
@@ -78,7 +90,7 @@ namespace ConsoleFrontEnd
                 {
                     List<Tickets> createdTicket = await new EmployeePosts().CreateReimbursement(ticketToCreate,api);
                     List<Tickets> authors = await new EmployeeGets().GetAllTickets(you, api);
-                    Console.WriteLine($"Ticket number {authors[authors.Count() - 1].ticketNum}");
+                    Console.WriteLine($"Ticket number {authors[authors.Count - 1].ticketNum}");
                 }
                 catch (InvalidCredentialsException)
                 {
@@ -90,20 +102,30 @@ namespace ConsoleFrontEnd
                 }
             }
         }
+        /// <summary>
+        /// This will talk with the website and will operate as a selection screen for the manager
+        /// </summary>
+        /// <param name="you">The current user</param>
+        /// <param name="api">The website url</param>
+        /// <returns></returns>
         public async Task MTicket(Users you,string api)
         {
             Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n 1) View Tickets\n2) Update a ticket");
-            if (int.Parse(Console.ReadLine()) == 1)
+            if ((int)new WarningFixer().Parsing() == 1)
             {
                 Console.WriteLine("Would you like those organized in a particular fashion?\n1) Collected by Status\n2) View a single ticket\n3) From a particular associate\n4) No particular order");
-                int sel = int.Parse(Console.ReadLine());
+                int sel = (int)new WarningFixer().Parsing();
                 switch (sel)
                 {
                     case 1:
                         Console.WriteLine("What status do you want to see? [Pending, Approved, Denied]");
-                        string state = Console.ReadLine();
+                        string? state = Console.ReadLine();
                         try
                         {
+                            if (state == null)
+                            {
+                                throw new ResourceNotFoundException();
+                            }
                             List<Tickets> TicksByStat = await new Gets().GetTicketsByState(state, api);
                             foreach (Tickets t in TicksByStat)
                             {
@@ -117,7 +139,7 @@ namespace ConsoleFrontEnd
                         break;
                     case 2:
                         Console.WriteLine("Which ticket would you like to see? [Please enter the ticket id]");
-                        int which = int.Parse(Console.ReadLine());
+                        int which = (int)new WarningFixer().Parsing();
                         try
                         {
                             Tickets thisOne = await new Gets().GetTicketsByTicketNum(which, api);
@@ -130,7 +152,7 @@ namespace ConsoleFrontEnd
                         break;
                     case 3:
                         Console.WriteLine("Please enter the id of the author whose tickets you which to view.");
-                        int id = int.Parse(Console.ReadLine());
+                        int id = (int)new WarningFixer().Parsing();
                         try
                         {
                             List<Tickets> tickets = await new Gets().GetTicketsByAuthor(id, api);
@@ -166,10 +188,10 @@ namespace ConsoleFrontEnd
             else
             {
                 Console.WriteLine("Which ticket would you like to update? Please enter the ticket number.");
-                int thisOne = int.Parse(Console.ReadLine());
+                int thisOne = (int)new WarningFixer().Parsing();
                 Console.WriteLine("What do you want to do with the ticket? [Please enter the number for your selection]\n1)Approve\n2)Deny");
-                int change = int.Parse(Console.ReadLine());
-                Tickets update = new Tickets(thisOne, (Status)change, 1, you.userId, "", 0);
+                int change = (int)new WarningFixer().Parsing();
+                Tickets update = new(thisOne, (Status)change, 1, you.userId, "", 0);
                 try
                 {
                     Tickets good = await new ManagerPosts().UpdateReimbursement(update,api);
@@ -179,7 +201,7 @@ namespace ConsoleFrontEnd
                 {
                     Console.WriteLine("Somethign wasn't input properly");
                 }
-                catch (UsernameNotAvailable)
+                catch (ResourceNotFoundException)
                 {
                     Console.WriteLine("That ticket has already been updated");
                 }

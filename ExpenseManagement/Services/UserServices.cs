@@ -24,10 +24,11 @@ namespace Services
         /// <param name="username"></param>
         /// <returns>User with specified username</returns>
         /// <exception cref="UsernameNotAvailable">Occurs if no such username exists or if table is null</exception>
-        public Users GetUserByUsername(string username)
+        public Users GetUserByUsername(string? username)
         {
             try
             {
+                username = username != null ? username : "";
                 return _userDAO.GetUserByUsername(username);
             }
             catch (UsernameNotAvailable)
@@ -60,11 +61,12 @@ namespace Services
         /// <returns>Specific user with provided ID</returns>
         /// <exception cref="UsernameNotAvailable">NO user exists with that userID</exception>
         /// <exception cref="ResourceNotFoundException">Occurs when Table is null</exception>
-        public Users GetUserByuserId(int userId)
+        public Users GetUserByuserId(int? userId)
         {
             Users users;
             try
             {
+                userId = userId != null ? userId : 0;
                 List<Users> userList = GetAllUsers();
                 if (userList.Count <userId)
                 {

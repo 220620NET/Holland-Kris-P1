@@ -22,19 +22,24 @@ namespace Models
         /// </summary>
         /// <param name="username">A valid username</param>
         /// <param name="password">A valid password</param>
-        public Users(string username,string password)
+        public Users(string? username,string? password):this()
         {
             this.username = username;
             this.password = password;
         }
-        public Users() { }
+        public Users() {
+            userId = 0;
+            username = "";
+            password = "";
+            role = Role.Employee;
+        }
         /// <summary>
         /// Constructor of Users class used for Registering a new user
         /// </summary>
         /// <param name="username">A valid username</param>
         /// <param name="password">A valid password</param>
         /// <param name="role">{employee = 0, Manager=1}</param>
-        public Users(string username, string password, int role)
+        public Users(string? username, string? password, int role):this()
         {
             this.username = username;
             this.password = password;
@@ -47,7 +52,7 @@ namespace Models
         /// <param name="username">A valid username</param>
         /// <param name="password">A valid password</param>
         /// <param name="role">{employee = 0, Manager=1}</param>
-        public Users(int userId, string username, string password, int role)
+        public Users(int userId, string? username, string? password, int role):this()
         {
             this.userId = userId;
             this.username = username;

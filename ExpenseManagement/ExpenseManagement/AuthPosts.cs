@@ -10,6 +10,14 @@ namespace ConsoleFrontEnd
     public class AuthPosts
     {
         public AuthPosts() { }
+        /// <summary>
+        /// This will talk to the website and handle login requests
+        /// </summary>
+        /// <param name="you">The user trying to login</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The user successfully logged in</returns>
+        /// <exception cref="InvalidCredentialsException">The password was incorrect</exception>
+        /// <exception cref="UsernameNotAvailable">There is no user with that username</exception>
         public async Task<Users> Login(Users you, string api)
         {
             string serializedUser = JsonSerializer.Serialize(you);
@@ -18,7 +26,7 @@ namespace ConsoleFrontEnd
             HttpResponseMessage response = await http.PostAsync(api + "login", content);
             if ((int)response.StatusCode == 200)
             {
-                Users user = JsonSerializer.Deserialize<Users>(await response.Content.ReadAsStringAsync());
+                Users? user = JsonSerializer.Deserialize<Users>(await response.Content.ReadAsStringAsync());
                 Console.WriteLine(user);
                 return user;
             }
@@ -33,6 +41,13 @@ namespace ConsoleFrontEnd
                 throw new UsernameNotAvailable();
             }
         }
+        /// <summary>
+        /// This will talk to the website to handle register requests
+        /// </summary>
+        /// <param name="you">The user trying to register</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The user successfully registered</returns>
+        /// <exception cref="UsernameNotAvailable">That username s not allowed</exception>
         public async Task<Users> Register(Users you, string api)
         {
             string serializedUser = JsonSerializer.Serialize(you);
@@ -42,7 +57,7 @@ namespace ConsoleFrontEnd
             if ((int)response.StatusCode == 201)
             {
 
-                Users user = JsonSerializer.Deserialize<Users>(await response.Content.ReadAsStringAsync());
+                Users? user = JsonSerializer.Deserialize<Users>(await response.Content.ReadAsStringAsync());
                 Console.WriteLine($"Successful Registration!\nWelcome {user.role} {user.userId}.");
                 return user;
             }

@@ -13,7 +13,7 @@ namespace ConsoleFrontEnd
         /// <summary>
         /// This will process login requests for the user from the main menu
         /// </summary>
-        /// <param name="userDAO"></param>
+        /// <param name="api">The website url</param>
         /// <returns>The user who logged in or a new </returns>
         /// <exception cref="InvalidCredentialsException">Occurs if the password does not match the entry for the provided username</exception>
         /// <exception cref="UsernameNotAvailable">Occurs if the provided username is not found in the table will suggest to the user to register an account.</exception>
@@ -23,7 +23,15 @@ namespace ConsoleFrontEnd
             string? username = Console.ReadLine();
             Console.WriteLine("What is you password");
             string? password = Console.ReadLine();
-            Users loginUser = new Users(0,username, password,0);
+            Users loginUser;
+            if (username == null || password == null)
+            {
+                throw new InvalidCredentialsException();
+            }
+            else
+            {
+                loginUser = new(0,username, password,0);
+            }
             try
             {
                 return await new AuthPosts().Login(loginUser, api);
@@ -39,6 +47,13 @@ namespace ConsoleFrontEnd
                 throw new UsernameNotAvailable();
             } 
         }
+        /// <summary>
+        /// This will process register requests for the user from the main menu
+        /// </summary>
+        /// <param name="api">The website url</param>
+        /// <returns></returns>
+        /// <exception cref="ResourceNotFoundException">Occurs if the information provided was invalid</exception>
+        /// <exception cref="UsernameNotAvailable">That user already exists</exception>
         public async Task<Users> Register(string api)
         {
             Users newUser = new Users();
@@ -47,24 +62,33 @@ namespace ConsoleFrontEnd
             Console.WriteLine("What do you want you password to be?");
             newUser.password = Console.ReadLine();
             Console.WriteLine("Are you a Manager?[y/n]");
-            char choice = Console.ReadLine().ToLower()[0];
-            
-            if (choice == 'y' || choice == 'Y')
+            string? s = Console.ReadLine();
+            if (s == null)
             {
-                newUser.role = Role.Manager;
+                throw new ResourceNotFoundException();
             }
             else
             {
-                newUser.role = Role.Employee;
+                char choice = s.ToLower()[0];
+
+                if (choice == 'y' || choice == 'Y')
+                {
+                    newUser.role = Role.Manager;
+                }
+                else
+                {
+                    newUser.role = Role.Employee;
+                }
+                try
+                {
+                    return await new AuthPosts().Register(newUser, api);
+                }
+                catch (UsernameNotAvailable)
+                {
+                    throw new UsernameNotAvailable("An account with that username already exists.");
+                }
             }
-            try
-            {
-                return await new AuthPosts().Register(newUser, api);
-            }
-            catch (UsernameNotAvailable)
-            { 
-                throw new UsernameNotAvailable("An account with that username already exists.");
-            } 
+            
         }
     }
 }

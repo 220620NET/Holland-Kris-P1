@@ -55,7 +55,7 @@ namespace DataAccess
         /// <param name="userId">A valid userID</param>
         /// <returns></returns>
         /// <exception cref="ResourceNotFoundException">Occurs if the userId does not exist in the table</exception>
-        public Users GetUserById(int userId)
+        public Users GetUserById(int? userId)
         {
             string sql = "select * from P1.users where userID = @a;";
             //datatype for an active connection
@@ -94,16 +94,18 @@ namespace DataAccess
         /// <returns>User with specified username</returns>
         /// <exception cref="UsernameNotAvailable">Occurs if the username is not valid</exception>
         /// <exception cref="ResourceNotFoundException">Occurs if the username is not in the database</exception>
-        public Users GetUserByUsername(string username)
+        public Users GetUserByUsername(string? username)
         {
             string sql = "select * from P1.users where username = @a;";
             //datatype for an active connection
             SqlConnection conn = _connectionFactory.GetConnection();
             //datatype to reference the sql command you want to do to a specific connection
             SqlCommand command = new SqlCommand(sql,conn);
+            username = username != null ? username : "";
             command.Parameters.AddWithValue("@a", username);
             Users you;
             Users s = new Users();
+
             try
             {
                 conn.Open();

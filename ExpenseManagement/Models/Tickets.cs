@@ -87,7 +87,7 @@
         
         public override string ToString()
         {
-            return $"Ticket Number: {this.ticketNum}\nStatus: {this.status}\nAuthor: {this.author}\nResolver: {this.resolver}\nDescription: {this.description}\n Amount: {this.amount}";
+            return $"Ticket Number: {this.ticketNum}\nStatus: {this.status}\nAuthor: {this.author}\nResolver: {this.resolver}\nDescription: {this.description}\nAmount: {this.amount}";
         }
     }
 }
