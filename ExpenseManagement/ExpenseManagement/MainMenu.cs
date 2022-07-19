@@ -16,7 +16,7 @@ namespace ConsoleFrontEnd
         /// <returns>User who just logged in or Registered</returns>
         public async Task<Users> Start()
         {
-            Console.WriteLine("Welcome!\nWould you like to...\n1) Login\n2) Register");
+            Console.WriteLine("Welcome!\nWould you like to...\n1) Login\n2) Register\n3) Exit program");
             int first = (int) new WarningFixer().Parsing();
             FirstScreen firstScreen = new();
             if (first == 1)
@@ -26,6 +26,9 @@ namespace ConsoleFrontEnd
             else if (first == 2)
             {
                 return await firstScreen.Register(api);
+            }else if(first == 3)
+            {
+                System.Environment.Exit(0);
             }
             return new Users();
         }
