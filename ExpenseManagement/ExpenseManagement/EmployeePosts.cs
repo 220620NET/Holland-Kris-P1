@@ -10,21 +10,21 @@ namespace ConsoleFrontEnd
     public class EmployeePosts
     {
         public EmployeePosts() { }
-        public async Task<Tickets> CreateReimbursement(Tickets ticket, string api)
+        public async Task<List<Tickets>> CreateReimbursement(Tickets ticket, string api)
         {
             string serializedUser = JsonSerializer.Serialize(ticket);
             StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
             HttpClient http = new HttpClient();
             HttpResponseMessage response = await http.PostAsync(api + "submit", content);
-            if ((int)response.StatusCode == 200)
+            if ((int)response.StatusCode == 202)
             {
-                Tickets created = JsonSerializer.Deserialize<Tickets>(await response.Content.ReadAsStringAsync());
-                Console.WriteLine(created);
+                List<Tickets> created = JsonSerializer.Deserialize<List<Tickets>>(await response.Content.ReadAsStringAsync());
+                //Console.WriteLine(created);
                 return created;
             }
-            else if ((int)response.StatusCode == 401)
+            else if ((int)response.StatusCode == 409)
             {
-                Console.WriteLine("Incorrect username or Password please try again");
+                Console.WriteLine("That ticket had invalid information please try again.");
                 throw new InvalidCredentialsException();
             }
             else

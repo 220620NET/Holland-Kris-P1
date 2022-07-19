@@ -14,31 +14,59 @@ namespace ConsoleFrontEnd
         {
             var http = new HttpClient();
             HttpResponseMessage result = await http.GetAsync(api + "tickets/status/" + state);
-            List<Tickets> tickets = JsonSerializer.Deserialize<List<Tickets>>(await result.Content.ReadAsStringAsync());
-            return tickets;
+            if ((int)result.StatusCode == 202)
+            {
+                List<Tickets> tickets = JsonSerializer.Deserialize<List<Tickets>>(await result.Content.ReadAsStringAsync());
+                return tickets;
+            }
+            else
+            {
+                throw new ResourceNotFoundException();
+            }
         }
 
         public async Task<List<Tickets>> GetAllTickets(string api)
         {
             var http = new HttpClient();
             HttpResponseMessage result = await http.GetAsync(api + "tickets");
-            List<Tickets> tickets = JsonSerializer.Deserialize<List<Tickets>>(await result.Content.ReadAsStringAsync());
-            return tickets;
+            if ((int)result.StatusCode == 202)
+            {
+                List<Tickets> tickets = JsonSerializer.Deserialize<List<Tickets>>(await result.Content.ReadAsStringAsync());
+                return tickets;
+            }
+            else
+            {
+                throw new ResourceNotFoundException();
+            }
         }
         public async Task<Tickets> GetTicketsByTicketNum( int ticketNum, string api)
         {
             var http = new HttpClient();
             HttpResponseMessage result = await http.GetAsync(api + "tickets/id/" + ticketNum);
-            Tickets tickets = JsonSerializer.Deserialize<Tickets>(await result.Content.ReadAsStringAsync());
-            return tickets;
+            if ((int)result.StatusCode == 202)
+            {
+                Tickets tickets = JsonSerializer.Deserialize<Tickets>(await result.Content.ReadAsStringAsync());
+                return tickets;
+            }
+            else
+            {
+                throw new ResourceNotFoundException();
+            }
+           
         }
-        public async Task<Tickets> GetTicketsByAuthor(int author, string api)
+        public async Task<List<Tickets>> GetTicketsByAuthor(int author, string api)
         {
             var http = new HttpClient();
             HttpResponseMessage result = await http.GetAsync(api + "tickets/author/" + author);
-            Tickets tickets = JsonSerializer.Deserialize<Tickets>(await result.Content.ReadAsStringAsync());
-            return tickets;
-        }
-        
+            if ((int)result.StatusCode == 202)
+            {
+                List<Tickets> tickets = JsonSerializer.Deserialize<List<Tickets>>(await result.Content.ReadAsStringAsync());
+                return tickets;
+            }
+            else
+            {
+                throw new ResourceNotFoundException();
+            }            
+        }        
     }
 }

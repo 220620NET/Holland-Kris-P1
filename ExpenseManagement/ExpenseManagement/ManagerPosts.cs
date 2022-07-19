@@ -18,19 +18,19 @@ namespace ConsoleFrontEnd
             if ((int)response.StatusCode == 200)
             {
                 Tickets updated = JsonSerializer.Deserialize<Tickets>(await response.Content.ReadAsStringAsync());
-                Console.WriteLine(updated);
                 return updated;
             }
             else if ((int)response.StatusCode == 409)
             {
-                Console.WriteLine("Incorrect username or Password please try again");
+                
                 throw new InvalidCredentialsException();
             }
             else if ((int)response.StatusCode==400)
             {
-                Console.WriteLine("That ticket has already been processed");
+                
                 throw new ResourceNotFoundException();
             }
+            throw new ResourceNotFoundException();
         }
     }
 }
