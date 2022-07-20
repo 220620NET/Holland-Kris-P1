@@ -174,7 +174,7 @@ namespace ConsoleFrontEnd
             try
             {
                 Users employee = await new UserGets().GetUser(id, api);
-                Console.WriteLine(employee + "Password: " + employee.password);
+                Console.WriteLine(employee);
             }
             catch (ResourceNotFoundException)
             {
@@ -194,7 +194,7 @@ namespace ConsoleFrontEnd
             try
             {
                 Users employee = await new UserGets().GetUser(s, api);
-                Console.WriteLine(employee + "Password: " + employee.password);
+                Console.WriteLine(employee);
             }
             catch (ResourceNotFoundException)
             {
@@ -214,7 +214,7 @@ namespace ConsoleFrontEnd
                 List<Users> users = await new UserGets().GetAllUsers(api);
                 foreach (Users t in users)
                 {
-                    Console.WriteLine(t + "Password: " + t.password);
+                    Console.WriteLine(t);
                 }
             }
             catch (ResourceNotFoundException)

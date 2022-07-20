@@ -120,6 +120,11 @@ namespace WebAPI.Controllers
                 return Results.BadRequest($"There are no tickets that are {new Tickets().NumToState(s)}.");
             }
         }
+        /// <summary>
+        /// Controller to get all tickets
+        /// </summary>
+        /// <remarks>returns Status Code 400 if the database is empty</remarks>
+        /// <returns>Status code 202 with all tickets</returns>
         public IResult GetAllTickets()
         {
             try

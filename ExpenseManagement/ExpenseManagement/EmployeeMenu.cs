@@ -11,12 +11,12 @@ namespace ConsoleFrontEnd
     {
         public EmployeeMenu() { }
         /// <summary>
-        /// 
+        /// This allows the employee to see their tickets by status
         /// </summary>
         /// <param name="you">The current user</param>
-        /// <param name="api"></param>
-        /// <returns></returns>
-        /// <exception cref="ResourceNotFoundException"></exception>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="ResourceNotFoundException">There are no tickets with that status</exception>
         public async Task ViewByStatus(Users you, string api)
         {
             Console.WriteLine("What status do you want to see? [Pending, Approved, Denied]");
@@ -38,6 +38,12 @@ namespace ConsoleFrontEnd
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// This allows the employee to view a ticket based on a specific id
+        /// </summary>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="ResourceNotFoundException">There is no ticket with that id</exception>
         public async Task ViewByID(string api)
         {
             Console.WriteLine("Which ticket would you like to see? [Please enter the ticket id]");
@@ -52,6 +58,13 @@ namespace ConsoleFrontEnd
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// This allows an employee to view all of their tickets
+        /// </summary>
+        /// <param name="you">The current user</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="ResourceNotFoundException">You have not created any tickets</exception>
         public async Task ViewAll(Users you, string api)
         {
             try
@@ -67,6 +80,14 @@ namespace ConsoleFrontEnd
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// Allows the employee to submt a reimbursement ticket
+        /// </summary>
+        /// <param name="you">The current user</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="InvalidCredentialsException">The information provided is incomplete</exception>
+        /// <exception cref="UsernameNotAvailable">There was an error in the processing of that ticket</exception>
         public async Task SubmitReimbursement(Users you, string api)
         {
             Console.WriteLine("How much would you like to make this reimbursement out for");

@@ -121,7 +121,11 @@ namespace Services
                 throw new ResourceNotFoundException();
             }
         }
-
+        /// <summary>
+        /// This will retrieve all tickets in the database
+        /// </summary>
+        /// <returns>All tickets in the database</returns>
+        /// <exception cref="ResourceNotFoundException">There are no tickets in the database</exception>
         public List<Tickets> GetAllTickets()
         {
             try

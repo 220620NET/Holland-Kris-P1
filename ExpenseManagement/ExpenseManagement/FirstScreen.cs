@@ -89,6 +89,12 @@ namespace ConsoleFrontEnd
                 }
             }
         }
+        /// <summary>
+        /// This allows a user to alter their password so long as they know ther id number
+        /// </summary>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task and the user information</returns>
+        /// <exception cref="ResourceNotFoundException">There is no user with that id</exception>
         public async Task<Users> AlterPassword(string api)
         {
             string? s="";

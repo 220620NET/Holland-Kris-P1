@@ -61,17 +61,22 @@ namespace ConsoleFrontEnd
                 return user;
             }
             else if ((int)response.StatusCode == 400)
-            {
-                Console.WriteLine("Incorrect username or Password please try again. You may already have an account.");
+            { 
                 throw new UsernameNotAvailable();
             }
             else
-            {
-
-                Console.WriteLine("You are not connected to the server");
+            { 
                 throw new UsernameNotAvailable();
             }
         }
+        /// <summary>
+        /// This allows a user to reset their password
+        /// </summary>
+        /// <param name="reset">The user and their new password</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="UsernameNotAvailable">There is no user with that id</exception>
+        /// <exception cref="ResourceNotFoundException">That is an invalid password</exception>
         public async Task Reset(Users reset, string api)
         {
             string serializedUser = JsonSerializer.Serialize(reset);
@@ -89,17 +94,22 @@ namespace ConsoleFrontEnd
                 }
             }
             else if ((int)response.StatusCode == 400)
-            {
-                Console.WriteLine("Incorrect username or Password please try again. You may already have an account.");
+            { 
                 throw new UsernameNotAvailable();
             }
             else
-            {
-
-                Console.WriteLine("You are not connected to the server");
+            { 
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// This allows a manager to change the role of a user
+        /// </summary>
+        /// <param name="reset">The user to reset</param>
+        /// <param name="api">The website url</param>
+        /// <returns>The completed task</returns>
+        /// <exception cref="UsernameNotAvailable">That user does not exist</exception>
+        /// <exception cref="ResourceNotFoundException">That user could not be changed</exception>
         public async Task Payroll(Users reset, string api)
         {
             string serializedUser = JsonSerializer.Serialize(reset);
@@ -112,19 +122,16 @@ namespace ConsoleFrontEnd
                 bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
                 if (user != null)
                 {
-                    Console.WriteLine($"Password reset to {reset.password}for user {reset.userId}.");
+                    Console.WriteLine($"Role change to {reset.password}for user {reset.userId} successful.");
 
                 }
             }
             else if ((int)response.StatusCode == 400)
-            {
-                Console.WriteLine("Incorrect username or Password please try again. You may already have an account.");
+            { 
                 throw new UsernameNotAvailable();
             }
             else
-            {
-
-                Console.WriteLine("You are not connected to the server");
+            { 
                 throw new ResourceNotFoundException();
             }
         }

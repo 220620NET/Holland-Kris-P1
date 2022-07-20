@@ -38,13 +38,11 @@ namespace ConsoleFrontEnd
                 }
             }
             else if ((int)response.StatusCode == 409)
-            {
-                Console.WriteLine("That ticket had invalid information please try again.");
+            { 
                 throw new InvalidCredentialsException();
             }
             else
-            {
-                Console.WriteLine(response.StatusCode);
+            { 
                 throw new UsernameNotAvailable();
             }
         }

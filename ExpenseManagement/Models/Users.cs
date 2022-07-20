@@ -87,7 +87,7 @@ namespace Models
         }
         public override string ToString()
         { 
-            return $"Id: {this.userId}, Name: {this.username}, Role: {RoleToString(this.role)}";
+            return $"Id: {this.userId}, Name: {this.username},Password: {this.password}, Role: {RoleToString(this.role)}";
         }
     }
 }

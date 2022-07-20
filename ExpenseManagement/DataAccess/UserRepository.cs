@@ -139,7 +139,6 @@ namespace DataAccess
         /// <param name="newUser">A new user with no specified userID</param>
         /// <returns>The user after being created</returns>
         /// <exception cref="UsernameNotAvailable"></exception>
-        
         public Users CreateUser(Users newUser)
         {
             string sql = "insert into P1.users(username,password, role) values (@u, @p,@r);";
@@ -176,6 +175,11 @@ namespace DataAccess
                 throw new UsernameNotAvailable();
             } 
         }
+        /// <summary>
+        /// This represents the update sql command for changing the password of a given user id
+        /// </summary>
+        /// <param name="user">The user to change passwords of</param>
+        /// <exception cref="ResourceNotFoundException">That user doesn't exist</exception>
         public void ResetPassword(Users user)
         {
             string sql = "update P1.users set password = @p where userID = @i;";
@@ -201,6 +205,11 @@ namespace DataAccess
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// This represents the update sql command to change the role of a given user id
+        /// </summary>
+        /// <param name="user">The user to change and their role</param>
+        /// <exception cref="ResourceNotFoundException">That user doesn't exist</exception>
         public void PayRollChange(Users user)
         {
             string sql = "update P1.users set role = @p where userID = @i;";

@@ -14,7 +14,7 @@ namespace ConsoleFrontEnd
         /// </summary>
         /// <param name="you">The currect User</param>
         /// <param name="api">The url for the website</param>
-        /// <returns></returns>
+        /// <returns>The completed task</returns>
         public async Task ETicket(Users you,string api)
         {
             Console.WriteLine($"Welcome {you.role} # {you.userId}!\nWhat would you like to do today?\n1) View Tickets\n2) Create a Ticket");
@@ -45,7 +45,7 @@ namespace ConsoleFrontEnd
         /// </summary>
         /// <param name="you">The current user</param>
         /// <param name="api">The website url</param>
-        /// <returns></returns>
+        /// <returns>The completed task</returns>
         public async Task MTicket(Users you,string api)
         {
             Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n1) View Tickets\n2) Update a ticket\n3) View Users\n4) Change a current users role");

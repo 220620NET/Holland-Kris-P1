@@ -85,6 +85,12 @@ namespace Services
                 return _user.CreateUser(newUser);
             }      
         }
+        /// <summary>
+        /// This allows for the password to be reset for a user
+        /// </summary>
+        /// <param name="reset">The user to reset and the new password</param>
+        /// <returns>The user</returns>
+        /// <exception cref="ResourceNotFoundException">There is no user with that userID</exception>
         public Users Reset(Users reset)
         {
             try
@@ -97,6 +103,12 @@ namespace Services
                 throw new ResourceNotFoundException();
             }
         }
+        /// <summary>
+        /// This allows a user to change roles in a company
+        /// </summary>
+        /// <param name="user">The user to change and their new role</param>
+        /// <returns>The user</returns>
+        /// <exception cref="ResourceNotFoundException">There is no user with that userID</exception>
         public Users PayRollChange(Users user)
         {
             try

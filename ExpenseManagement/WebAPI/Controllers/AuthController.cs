@@ -57,6 +57,12 @@ namespace WebAPI.Controllers
                 return Results.Unauthorized();
             }
         }
+        /// <summary>
+        /// Controller to reset the password of a user
+        /// </summary>
+        /// <remarks>returns Status Code 400 if the information is invalid</remarks>
+        /// <param name="reset">The user to reset the password of</param>
+        /// <returns>Status Code 200</returns>
         public IResult Reset(Users reset)
         {
             try
@@ -66,9 +72,15 @@ namespace WebAPI.Controllers
             }
             catch (ResourceNotFoundException)
             {
-                return Results.Unauthorized();
+                return Results.BadRequest();
             }
         }
+        /// <summary>
+        /// Controller to change the role of a user at the company
+        /// </summary>
+        /// <remarks>returns Status Code 400 if the information is invalid</remarks>
+        /// <param name="reset">The user to change the role of</param>
+        /// <returns>Status Code 200</returns>
         public IResult PayRollChange(Users reset)
         {
             try
@@ -78,7 +90,7 @@ namespace WebAPI.Controllers
             }
             catch (ResourceNotFoundException)
             {
-                return Results.Unauthorized();
+                return Results.BadRequest();
             }
         }
     }
