@@ -1,6 +1,11 @@
+using Moq;
 using Models;
-using Services;
 using CustomExceptions;
+using Services;
+using DataAccess;
+using System;
+using Xunit;
+using System.Threading.Tasks;
 namespace Validation
 {
     public class AuthServicesTesting
@@ -10,13 +15,26 @@ namespace Validation
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        [Theory]
-        [InlineData("Kris","aspd")]
-        [InlineData("Kris","apmenols")]
-        [InlineData("Kris","tacos")]
-        public void InvalidPasswordForLogin(string username, string password)
+        [Fact]
+        public void InvalidPasswordForLogin()
         {
-            Assert.Throws<InvalidCredentialsException>(() => new AuthServices().Login(username, password));
+            var mockedRepo = new Mock<IUserDAO>();
+            Users userToAdd = new()
+            {
+                username = "StarStruck",
+                password = "Lover23",
+                role = Role.Employee
+            };
+            Users userToReturn = new()
+            {
+                userId = 1,
+                username = "StarStruck",
+                password = "7",
+                role = Role.Employee
+            };
+            mockedRepo.Setup(repo => repo.GetUserByUsername(userToAdd.username)).Returns(userToAdd);
+            AuthServices service = new(mockedRepo.Object);
+            Assert.Throws<UsernameNotAvailable>(() => service.Register(userToReturn));
         }
 
         /// <summary>
@@ -24,14 +42,28 @@ namespace Validation
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        [Theory]
-        [InlineData("Taco", "password")]
-        [InlineData("Pizza", "aspd")]
-        [InlineData("PrincessLeia", "apmenols")]
-        [InlineData("SkywalkerFan_5_4", "tacos")]
-        public void UsernameLoginFailure(string username, string password)
+        [Fact]
+        public void UsernameLoginFailure()
         {
-            Assert.Throws<ResourceNotFoundException>(()=>new AuthServices().Login(username, password));
+            var mockedRepo = new Mock<IUserDAO>();
+            Users userToAdd = new()
+            {
+                username = "StarStruck",
+                password = "Lover23",
+                role = Role.Employee
+            };
+            Users userToReturn = new()
+            {
+                userId = 1,
+                username = "StarStrck",
+                password = "Lover3",
+                role = Role.Employee
+            };
+            mockedRepo.Setup(repo => repo.GetUserByUsername(userToAdd.username)).Returns(userToAdd);
+            mockedRepo.Setup(repo => repo.GetUserByUsername(userToReturn.username)).Throws<UsernameNotAvailable>();
+            AuthServices service = new(mockedRepo.Object);
+            mockedRepo.Verify(repo => repo.GetUserByUsername(userToReturn.username), Times.Never);
+            Assert.Throws<UsernameNotAvailable>(() => service.Register(userToReturn));
         }
 
         /// <summary>
@@ -40,16 +72,27 @@ namespace Validation
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="role"></param>
-        [Theory]
-        [InlineData("Kris", "password",1)]
-        [InlineData("Kris","as",1)]
-        [InlineData("Kris","asdmoam",0)]
-        [InlineData("StarCraftEnjoyer","ToInfinityAnd",1)]
-        public void DuplicateUser(string username, string password, int role)
+        [Fact]
+        public void DuplicateUser()
         {
-            var authServices = new AuthServices();
-            Users user = new Users(username, password, role);
-            Assert.Throws<UsernameNotAvailable>(() => authServices.Register(user));
+            var mockedRepo = new Mock<IUserDAO>();
+            Users userToAdd = new()
+            {
+                username = "StarStruck",
+                password = "Lover23",
+                role = Role.Employee
+            };
+            Users userToReturn = new()
+            {
+                userId = 1,
+                username = "StarStruck",
+                password = "Lover23",
+                role = Role.Employee
+            };
+            mockedRepo.Setup(repo => repo.GetUserByUsername(userToAdd.username)).Returns(userToReturn);
+            AuthServices service =new(mockedRepo.Object);
+            Assert.Throws<UsernameNotAvailable>(() => service.Register(userToAdd));
+            mockedRepo.Verify(repo=>repo.GetUserByUsername(userToAdd.username),Times.Once());
         }
     }
 }
