@@ -57,5 +57,29 @@ namespace WebAPI.Controllers
                 return Results.Unauthorized();
             }
         }
+        public IResult Reset(Users reset)
+        {
+            try
+            {
+                _authServices.Reset(reset);
+                return Results.Ok(true);
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.Unauthorized();
+            }
+        }
+        public IResult PayRollChange(Users reset)
+        {
+            try
+            {
+                _authServices.PayRollChange(reset);
+                return Results.Ok(true);
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.Unauthorized();
+            }
+        }
     }
 }

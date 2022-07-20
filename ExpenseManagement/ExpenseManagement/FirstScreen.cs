@@ -38,12 +38,12 @@ namespace ConsoleFrontEnd
             }
             catch (InvalidCredentialsException)
             {
-                Console.WriteLine("Sorry that password does not match the username or you forgot to enter a password or username");
+                
                 throw new InvalidCredentialsException();
             }
             catch (UsernameNotAvailable)
             {
-                Console.WriteLine("That Username does not exist in the database");
+                
                 throw new UsernameNotAvailable();
             } 
         }
@@ -88,7 +88,33 @@ namespace ConsoleFrontEnd
                     throw new UsernameNotAvailable("An account with that username already exists.");
                 }
             }
-            
+        }
+        public async Task<Users> AlterPassword(string api)
+        {
+            string? s="";
+            bool correct = false;
+            while (!correct)
+            {
+                Console.WriteLine("What do you want your neww password to be?");
+                s = Console.ReadLine();
+                correct = s == null ? true : false;
+                
+            }
+            Console.WriteLine("What is you user ID?");
+            Users newUser = new(){
+                userId = (int) new WarningFixer().Parsing(),
+                password = s
+            };
+            try
+            {
+                await new AuthPosts().Reset(newUser, api);
+                return await new UserGets().GetUser(newUser.userId, api);
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+                
         }
     }
 }

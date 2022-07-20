@@ -85,5 +85,29 @@ namespace Services
                 return _user.CreateUser(newUser);
             }      
         }
+        public Users Reset(Users reset)
+        {
+            try
+            {
+                _user.ResetPassword(reset);
+                return _user.GetUserById(reset.userId);
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
+        public Users PayRollChange(Users user)
+        {
+            try
+            {
+                _user.PayRollChange(user);
+                return _user.GetUserById(user.userId);
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
     }
 }

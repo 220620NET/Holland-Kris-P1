@@ -120,6 +120,6 @@ namespace ConsoleFrontEnd
             {
                 throw new ResourceNotFoundException();
             }            
-        }        
+        }
     }
 }

@@ -176,5 +176,55 @@ namespace DataAccess
                 throw new UsernameNotAvailable();
             } 
         }
+        public void ResetPassword(Users user)
+        {
+            string sql = "update P1.users set password = @p where userID = @i;";
+            //datatype for an active connection
+            SqlConnection conn = _connectionFactory.GetConnection();
+            //datatype to reference the sql command you want to do to a specific connection
+            SqlCommand command = new SqlCommand(sql, conn);
+            command.Parameters.AddWithValue("@i", user.userId);
+            command.Parameters.AddWithValue("@p", user.password);
+            try
+            {
+                conn.Open();
+                int ra = command.ExecuteNonQuery();
+                conn.Close();
+                
+                if (ra==0)
+                {
+                    throw new ResourceNotFoundException();
+                }
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
+        public void PayRollChange(Users user)
+        {
+            string sql = "update P1.users set role = @p where userID = @i;";
+            //datatype for an active connection
+            SqlConnection conn = _connectionFactory.GetConnection();
+            //datatype to reference the sql command you want to do to a specific connection
+            SqlCommand command = new SqlCommand(sql, conn);
+            command.Parameters.AddWithValue("@i", user.userId);
+            command.Parameters.AddWithValue("@p", user.role);
+            try
+            {
+                conn.Open();
+                int ra = command.ExecuteNonQuery();
+                conn.Close();
+
+                if (ra == 0)
+                {
+                    throw new ResourceNotFoundException();
+                }
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
     }
 }

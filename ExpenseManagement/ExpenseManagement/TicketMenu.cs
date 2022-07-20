@@ -110,8 +110,9 @@ namespace ConsoleFrontEnd
         /// <returns></returns>
         public async Task MTicket(Users you,string api)
         {
-            Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n 1) View Tickets\n2) Update a ticket");
-            if ((int)new WarningFixer().Parsing() == 1)
+            Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n1) View Tickets\n2) Update a ticket\n3) View Users\n4) Change a current users role");
+            int sim = (int)new WarningFixer().Parsing();
+            if (sim== 1)
             {
                 Console.WriteLine("Would you like those organized in a particular fashion?\n1) Collected by Status\n2) View a single ticket\n3) From a particular associate\n4) No particular order");
                 int sel = (int)new WarningFixer().Parsing();
@@ -185,7 +186,7 @@ namespace ConsoleFrontEnd
                         break;
                 }
             }
-            else
+            else if (sim== 2)
             {
                 Console.WriteLine("Which ticket would you like to update? Please enter the ticket number.");
                 int thisOne = (int)new WarningFixer().Parsing();
@@ -204,6 +205,79 @@ namespace ConsoleFrontEnd
                 catch (ResourceNotFoundException)
                 {
                     Console.WriteLine("That ticket has already been updated");
+                }
+            }else if (sim== 4)
+            {
+                Console.WriteLine("Which user would you like to update? Please enter the userId.");
+                int thisOne = (int)new WarningFixer().Parsing();
+                Console.WriteLine("Would you like to make them an empoyee or manager? [Please enter the number for your selection]\n0)Employee\n1)Manager");
+                int change = (int)new WarningFixer().Parsing();
+                Users update = new()
+                {
+                    userId = thisOne,
+                    role = (Role)change
+                };
+                try
+                {
+                    await new AuthPosts().Payroll(update, api);
+                    Console.WriteLine("Successfully Updated!");
+                }
+                catch (UsernameNotAvailable)
+                {
+                    Console.WriteLine("Somethign wasn't input properly");
+                }
+                catch (ResourceNotFoundException)
+                {
+                    Console.WriteLine("That ticket has already been updated");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Which selection of users would you like to see:\n1) All Users\n2) Specific User By their username\n3) Specific User by their userID");
+                int sel = (int)new WarningFixer().Parsing();
+                switch (sel)
+                {
+                    case 2:
+                        Console.WriteLine("Please enter the username of the user you which to view.");
+                        string? s  = Console.ReadLine()!=null?Console.ReadLine():"";
+                        try
+                        {
+                            Users employee = await new UserGets().GetUser(s, api);
+                            Console.WriteLine(employee + "Password: " + employee.password);
+                        }
+                        catch (ResourceNotFoundException)
+                        {
+                            Console.WriteLine("That associate has not made any tickets yet.");
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("Please enter the id of the author whose tickets you which to view.");
+                        int id = (int)new WarningFixer().Parsing();
+                        try
+                        {
+                            Users employee = await new UserGets().GetUser(id, api);
+                            Console.WriteLine(employee+"Password: "+employee.password);
+                        }
+                        catch (ResourceNotFoundException)
+                        {
+                            Console.WriteLine("That associate has not made any tickets yet.");
+                        }
+                        break;
+                    default: 
+                        try
+                        {
+                            List<Users> users = await new UserGets().GetAllUsers(api);
+                            foreach (Users t in users)
+                            {
+                                Console.WriteLine(t + "Password: " + t.password);
+                            }
+                        }
+                        catch (ResourceNotFoundException)
+                        {
+                            Console.WriteLine("That associate has not made any tickets yet.");
+                        }
+                        break;
                 }
             }
         }

@@ -222,7 +222,7 @@ namespace DataAccess
                 {
                     if(GetTicketsById(update.ticketNum).status==Status.Approved || GetTicketsById(update.ticketNum).status == Status.Denied)
                     {
-                        return false;
+                        throw new ResourceNotFoundException();
                     }
                     int ra = command.ExecuteNonQuery();
                     connection.Close();

@@ -22,5 +22,7 @@ namespace DataAccess
         public Users GetUserById(int? userId);
         public Users GetUserByUsername(string? userName);
         public Users CreateUser(Users user);
+        public void ResetPassword(Users user);
+        public void PayRollChange(Users user);
     }
 }

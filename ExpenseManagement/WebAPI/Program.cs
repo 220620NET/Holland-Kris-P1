@@ -4,7 +4,6 @@ using CustomExceptions;
 using DataAccess;
 using Models;
 using WebAPI.Controllers;
-
 var builder = WebApplication.CreateBuilder(args);
 
 /*  Scoped Services
@@ -42,7 +41,8 @@ app.MapGet("/", () => "Welcome! Please type in /swagger/index.html at the end of
  */
 app.MapPost("/register", (Users user, AuthController controller) =>controller.Register(user));
 app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));
-
+app.MapPost("/reset", (Users user, AuthController controller) => controller.Reset(user));
+app.MapPost("/payroll", (Users user, AuthController controller) => controller.PayRollChange(user));
 /*  User Endpoints
  *  
  *  /users can be entered in the url bar and will return a json reading of all users in the database. There is no hashing of the passwords as of now

@@ -31,8 +31,7 @@ namespace ConsoleFrontEnd
                 return user;
             }
             else if ((int)response.StatusCode == 401)
-            {
-                Console.WriteLine("Incorrect username or Password please try again");
+            { 
                 throw new InvalidCredentialsException();
             }
             else
@@ -71,6 +70,62 @@ namespace ConsoleFrontEnd
 
                 Console.WriteLine("You are not connected to the server");
                 throw new UsernameNotAvailable();
+            }
+        }
+        public async Task Reset(Users reset, string api)
+        {
+            string serializedUser = JsonSerializer.Serialize(reset);
+            StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
+            HttpClient http = new HttpClient();
+            HttpResponseMessage response = await http.PostAsync(api + "reset", content);
+            if ((int)response.StatusCode == 201)
+            {
+
+                bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
+                if (user!=null)
+                {
+                    Console.WriteLine($"Password reset to {reset.password}for user {reset.userId}.");
+
+                }
+            }
+            else if ((int)response.StatusCode == 400)
+            {
+                Console.WriteLine("Incorrect username or Password please try again. You may already have an account.");
+                throw new UsernameNotAvailable();
+            }
+            else
+            {
+
+                Console.WriteLine("You are not connected to the server");
+                throw new ResourceNotFoundException();
+            }
+        }
+        public async Task Payroll(Users reset, string api)
+        {
+            string serializedUser = JsonSerializer.Serialize(reset);
+            StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
+            HttpClient http = new HttpClient();
+            HttpResponseMessage response = await http.PostAsync(api + "payroll", content);
+            if ((int)response.StatusCode == 201)
+            {
+
+                bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
+                if (user != null)
+                {
+                    Console.WriteLine($"Password reset to {reset.password}for user {reset.userId}.");
+
+                }
+            }
+            else if ((int)response.StatusCode == 400)
+            {
+                Console.WriteLine("Incorrect username or Password please try again. You may already have an account.");
+                throw new UsernameNotAvailable();
+            }
+            else
+            {
+
+                Console.WriteLine("You are not connected to the server");
+                throw new ResourceNotFoundException();
             }
         }
     }

@@ -16,19 +16,70 @@ namespace ConsoleFrontEnd
         /// <returns>User who just logged in or Registered</returns>
         public async Task<Users> Start()
         {
-            Console.WriteLine("Welcome!\nWould you like to...\n1) Login\n2) Register\n3) Exit program");
+            Console.WriteLine("Welcome!\nWould you like to...\n1) Login\n2) Register\n3) Reset your password\n4) Exit program");
             int first = (int) new WarningFixer().Parsing();
             FirstScreen firstScreen = new();
             if (first == 1)
             {
-                return await firstScreen.Login(api);
+                bool login = true;
+                Users you=new();
+                while (login)
+                {
+                    try
+                    {
+                        you =await firstScreen.Login(api);
+                        if (you.userId == 0)
+                        {
+                            throw new InvalidCredentialsException();
+                        }
+                        else
+                        {
+                            login = false;
+                        }
+                    }
+                    catch (InvalidCredentialsException)
+                    {
+                        Console.WriteLine("Sorry that password does not match the username or you forgot to enter a password or username");
+                    }
+                    catch (UsernameNotAvailable)
+                    {
+                        Console.WriteLine("That Username does not exist in the database");
+                    }
+                }
+                return you;
             }
             else if (first == 2)
             {
-                return await firstScreen.Register(api);
-            }else if(first == 3)
+                while (true)
+                {
+                    try
+                    {
+                        return await firstScreen.Register(api);
+                    }
+                    catch (ResourceNotFoundException)
+                    {
+                        Console.WriteLine("You didn't enter the right information try that again");
+                    }
+                    catch (UsernameNotAvailable e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
+            else if (first == 3)
             {
-                System.Environment.Exit(0);
+                try
+                {
+                    return await firstScreen.AlterPassword(api);
+                }
+                catch (ResourceNotFoundException)
+                {
+                    Console.WriteLine("That password could not be changed");
+                }
+            }
+            else if (first == 4)
+            {
+                Environment.Exit(0);
             }
             return new Users();
         }
