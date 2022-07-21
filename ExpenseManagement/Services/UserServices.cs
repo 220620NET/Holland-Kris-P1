@@ -86,6 +86,19 @@ namespace Services
                 throw new UsernameNotAvailable();
             }
             return users;
+        } 
+        public Users DeleteUser(int id)
+        {
+            try
+            {
+                Users userToDelete = _userDAO.GetUserById(id);
+                _userDAO.DeleteUser(id);
+                return userToDelete;
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
         }
     }
 }

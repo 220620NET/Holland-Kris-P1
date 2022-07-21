@@ -41,8 +41,8 @@ app.MapGet("/", () => "Welcome! Please type in /swagger/index.html at the end of
  */
 app.MapPost("/register", (Users user, AuthController controller) =>controller.Register(user));
 app.MapPost("/login", (Users user, AuthController controller) => controller.Login(user));
-app.MapPost("/reset", (Users user, AuthController controller) => controller.Reset(user));
-app.MapPost("/payroll", (Users user, AuthController controller) => controller.PayRollChange(user));
+app.MapPut("/reset", (Users user, AuthController controller) => controller.Reset(user));
+app.MapPut("/payroll", (Users user, AuthController controller) => controller.PayRollChange(user));
 /*  User Endpoints
  *  
  *  /users can be entered in the url bar and will return a json reading of all users in the database. There is no hashing of the passwords as of now
@@ -52,6 +52,7 @@ app.MapPost("/payroll", (Users user, AuthController controller) => controller.Pa
 app.MapGet("/users", (UserController controller) =>controller.GetAllUsers());
 app.MapGet("/users/id/{id}", (int id, UserController controller) => controller.GetUserByID(id));
 app.MapGet("/users/name/{username}", (string username, UserController controller) => controller.GetUserByUsername(username));
+app.MapDelete("/fire/{id}",(int id, UserController controller) => controller.DeleteUser(id));
 
 /*  Ticket Endpoints
  *  
@@ -62,7 +63,7 @@ app.MapGet("/users/name/{username}", (string username, UserController controller
  *  /tickets/status/{state} can be entered in the url bar and will return a json reading of the list of tickets that have the specified status
  */
 app.MapPost("/submit", (Tickets newTicket, TicketController controller) => controller.Submit(newTicket));
-app.MapPost("/process", (Tickets newTicket, TicketController controller) => controller.Process(newTicket));
+app.MapPut("/process", (Tickets newTicket, TicketController controller) => controller.Process(newTicket));
 app.MapGet("/tickets/author/{authorID}", (int authorID, TicketController controller) => controller.GetTicketByAuthor(authorID));
 app.MapGet("/tickets/id/{ticketNum}", (int ticketNum, TicketController controller) => controller.GetTicketByTicketNum(ticketNum));
 app.MapGet("/tickets/status/{state}", (string state, TicketController controller) => controller.GetTicketByStatus(state));

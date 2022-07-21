@@ -235,5 +235,29 @@ namespace DataAccess
                 throw new ResourceNotFoundException();
             }
         }
+        public void DeleteUser(int id)
+        {
+            string sql = "delete from P1.users where userID = @i;";
+            //datatype for an active connection
+            SqlConnection conn = _connectionFactory.GetConnection();
+            //datatype to reference the sql command you want to do to a specific connection
+            SqlCommand command = new SqlCommand(sql, conn);
+            command.Parameters.AddWithValue("@i", id);
+            try
+            {
+                conn.Open();
+                int ra = command.ExecuteNonQuery();
+                conn.Close();
+
+                if (ra == 0)
+                {
+                    throw new ResourceNotFoundException();
+                }
+            }
+            catch (ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException();
+            }
+        }
     }
 }

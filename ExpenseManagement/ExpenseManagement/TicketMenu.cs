@@ -1,7 +1,6 @@
 ﻿using CustomExceptions;
 using System.Text.Json;
-using System.Text;
-using System.Net.Http;
+using System.Text; 
 using Models;
 
 
@@ -48,7 +47,7 @@ namespace ConsoleFrontEnd
         /// <returns>The completed task</returns>
         public async Task MTicket(Users you,string api)
         {
-            Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n1) View Tickets\n2) Update a ticket\n3) View Users\n4) Change a current users role");
+            Console.WriteLine($"Welcome {you.username}!\nWhat would you like to do today?\n1) View Tickets\n2) Update a ticket\n3) View Users\n4) Change a current users role\n5) Fire a user");
             int sim = (int)new WarningFixer().Parsing();
             if (sim== 1)
             {
@@ -85,6 +84,28 @@ namespace ConsoleFrontEnd
                     Console.WriteLine("That ticket has already been updated");
                 }
 
+            }else if (sim == 5)
+            {
+                Console.WriteLine("What is the user you wish to fire?");
+                int userToFire = (int)new WarningFixer().Parsing();
+                string serializedUser = JsonSerializer.Serialize(userToFire);
+                StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
+                HttpClient http = new HttpClient();
+                HttpResponseMessage response = await http.DeleteAsync(api + "fire/"+ userToFire);
+                if ((int)response.StatusCode == 202)
+                {
+
+                    bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
+                    if (user != null)
+                    {
+                        Console.WriteLine($"User {userToFire} has been fired.");
+
+                    }
+                } 
+                else
+                {
+                    Console.WriteLine($"User {userToFire} could not be fired. Check to see if that user exists in the system first.");
+                }
             }
             else
             {

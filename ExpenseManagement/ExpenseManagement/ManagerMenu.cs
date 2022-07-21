@@ -114,7 +114,12 @@ namespace ConsoleFrontEnd
             int thisOne = (int)new WarningFixer().Parsing();
             Console.WriteLine("What do you want to do with the ticket? [Please enter the number for your selection]\n1)Approve\n2)Deny");
             int change = (int)new WarningFixer().Parsing();
-            Tickets update = new(thisOne, (Status)change, 1, you.userId, "", 0);
+            Tickets update = new()
+            {
+                ticketNum = thisOne,
+                status = change==1?Status.Approved:Status.Denied,
+                resolver = you.userId
+            };
             try
             {
                 Tickets good = await new ManagerPosts().UpdateReimbursement(update, api);

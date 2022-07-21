@@ -82,7 +82,7 @@ namespace ConsoleFrontEnd
             string serializedUser = JsonSerializer.Serialize(reset);
             StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
             HttpClient http = new HttpClient();
-            HttpResponseMessage response = await http.PostAsync(api + "reset", content);
+            HttpResponseMessage response = await http.PutAsync(api + "reset", content);
             if ((int)response.StatusCode == 201)
             {
 
@@ -115,7 +115,7 @@ namespace ConsoleFrontEnd
             string serializedUser = JsonSerializer.Serialize(reset);
             StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
             HttpClient http = new HttpClient();
-            HttpResponseMessage response = await http.PostAsync(api + "payroll", content);
+            HttpResponseMessage response = await http.PutAsync(api + "payroll", content);
             if ((int)response.StatusCode == 201)
             {
 

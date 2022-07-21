@@ -22,8 +22,8 @@ namespace ConsoleFrontEnd
             string serializedUser = JsonSerializer.Serialize(update);
             StringContent content = new(serializedUser, Encoding.UTF8, "application/json");
             HttpClient http = new();
-            HttpResponseMessage response = await http.PostAsync(api + "process", content);
-            if ((int)response.StatusCode == 200)
+            HttpResponseMessage response = await http.PutAsync(api + "process", content);
+            if ((int)response.StatusCode == 202)
             {
                 Tickets? updated = JsonSerializer.Deserialize<Tickets>(await response.Content.ReadAsStringAsync());
                 return updated!=null? updated :throw new ResourceNotFoundException();              

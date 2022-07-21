@@ -70,5 +70,17 @@ namespace WebAPI.Controllers
                 return Results.BadRequest("That username doesn't exist");
             }
         }
+        public IResult DeleteUser(int id)
+        {
+            try
+            {
+                Users user = _Services.DeleteUser(id);
+                return Results.Accepted("/fire/{id}", user);
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.BadRequest("That username doesn't exist");
+            }
+        }
     }
 }

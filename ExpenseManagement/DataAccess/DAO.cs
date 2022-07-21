@@ -24,5 +24,6 @@ namespace DataAccess
         public Users CreateUser(Users user);
         public void ResetPassword(Users user);
         public void PayRollChange(Users user);
+        public void DeleteUser(int id);
     }
 }

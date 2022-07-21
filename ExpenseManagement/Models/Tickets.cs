@@ -14,21 +14,30 @@
         public string? description { get; set; }
         public decimal amount { get; set; }
         
-        public Tickets() { } 
+        public Tickets()
+        { 
+            ticketNum = 0;
+            status = Status.Pending;
+            author = 0;
+            resolver = 0;
+            description = "";
+            amount = 0;
+        } 
         /// <summary>
         /// Constructor for creating a ticket
         /// </summary>
         /// <param name="aToSet">A valid user who authored this ticket</param>
         /// <param name="dToSet">A reason for the ticket</param>
         /// <param name="amToSet">The amount of money this ticket is worth</param>
-        public Tickets(int aToSet, string? dToSet, decimal amToSet)
+        public Tickets(int aToSet, string? dToSet, decimal amToSet):this()
         {
             this.author = aToSet;
             this.description = dToSet;
             this.amount=amToSet;
         }
         
-        public Tickets(Status state, int resolver){
+        public Tickets(Status state, int resolver):this()
+        {
             this.status=state;
             this.resolver=resolver;
         }
@@ -41,7 +50,7 @@
         /// <param name="resolver">A valid user who resolved this ticket</param>
         /// <param name="description">A reason for the ticket</param>
         /// <param name="amount">The amount of money this ticket is worth</param>
-        public Tickets(int ticketNum, Status status, int author, int resolver, string? description, decimal amount)
+        public Tickets(int ticketNum, Status status, int author, int resolver, string? description, decimal amount):this()
         {
             this.ticketNum = ticketNum;
             this.status = status;
