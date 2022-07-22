@@ -71,11 +71,13 @@ namespace ConsoleFrontEnd
                 try
                 {
                     return await firstScreen.AlterPassword(api);
+                    
                 }
                 catch (ResourceNotFoundException)
                 {
                     Console.WriteLine("That password could not be changed");
                 }
+
             }
             else if (first == 4)
             {

@@ -73,7 +73,7 @@ namespace ConsoleFrontEnd
         public async Task<Users> GetUser(int userID, string api)
         {
             var http = new HttpClient();
-            HttpResponseMessage result = await http.GetAsync(api + "users/name/" + userID);
+            HttpResponseMessage result = await http.GetAsync(api + "users/id/" + userID);
             if ((int)result.StatusCode == 202)
             {
                 Users? all = JsonSerializer.Deserialize<Users>(await result.Content.ReadAsStringAsync());

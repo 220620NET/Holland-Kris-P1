@@ -174,19 +174,14 @@ namespace DataAccess
             try
             {
                 connection.Open();
-                if ((newTicket.author>0)&&(newTicket.author<=check.Count))
-                {
+               
                     int ra = command.ExecuteNonQuery();
                     connection.Close();
                     if(ra != 0)
                     {
                         return true;
                     }
-                }
-                else
-                {
-                    throw new UsernameNotAvailable();
-                }
+                
             }
             catch (ResourceNotFoundException)
             {
@@ -218,8 +213,6 @@ namespace DataAccess
             try
             {
                 connection.Open();
-                if ((update.ticketNum > 0) && (update.ticketNum <= check.Count))
-                {
                     if(GetTicketsById(update.ticketNum).status==Status.Approved || GetTicketsById(update.ticketNum).status == Status.Denied)
                     {
                         throw new ResourceNotFoundException();
@@ -229,12 +222,7 @@ namespace DataAccess
                     if (ra != 0)
                     {
                         return true;
-                    }
-                }
-                else
-                {
-                    throw new UsernameNotAvailable();
-                }
+                    } 
             }
             catch (ResourceNotFoundException)
             {

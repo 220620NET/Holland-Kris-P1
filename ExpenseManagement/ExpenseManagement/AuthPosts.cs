@@ -77,21 +77,23 @@ namespace ConsoleFrontEnd
         /// <returns>The completed task</returns>
         /// <exception cref="UsernameNotAvailable">There is no user with that id</exception>
         /// <exception cref="ResourceNotFoundException">That is an invalid password</exception>
-        public async Task Reset(Users reset, string api)
+        public async Task<Users> Reset(Users reset, string api)
         {
             string serializedUser = JsonSerializer.Serialize(reset);
             StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
             HttpClient http = new HttpClient();
             HttpResponseMessage response = await http.PutAsync(api + "reset", content);
-            if ((int)response.StatusCode == 201)
+            if ((int)response.StatusCode == 200)
             {
 
                 bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
                 if (user!=null)
                 {
                     Console.WriteLine($"Password reset to {reset.password}for user {reset.userId}.");
+                    return await new UserGets().GetUser(reset.userId,api);
 
                 }
+                throw new ResourceNotFoundException();
             }
             else if ((int)response.StatusCode == 400)
             { 

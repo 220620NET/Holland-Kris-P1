@@ -37,7 +37,7 @@ namespace ConsoleFrontEnd
                 {
                     Console.WriteLine("Something weird just happened.");
                 }
-            }
+            } 
         }
         /// <summary>
         /// This will talk with the website and will operate as a selection screen for the manager
@@ -145,6 +145,7 @@ namespace ConsoleFrontEnd
                         break;
                 }
             }
+            
         }
     }
    

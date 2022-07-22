@@ -103,18 +103,18 @@ namespace ConsoleFrontEnd
             {
                 Console.WriteLine("What do you want your neww password to be?");
                 s = Console.ReadLine();
-                correct = s == null ? true : false;
+                correct = s == null ? false : true;
                 
             }
-            Console.WriteLine("What is you user ID?");
-            Users newUser = new(){
+                Console.WriteLine("What is you user ID?");
+                Users newUser = new(){
                 userId = (int) new WarningFixer().Parsing(),
                 password = s
             };
             try
-            {
-                await new AuthPosts().Reset(newUser, api);
-                return await new UserGets().GetUser(newUser.userId, api);
+            { 
+               return await new AuthPosts().Reset(newUser, api);
+               
             }
             catch (ResourceNotFoundException)
             {
