@@ -17,7 +17,7 @@ select * from P1.users where username = 'Kris';
 -- GetUserByID()
 select * from P1.users where userID =1;
 -- Creating columns after table creation
-delete from P1.users is test;
+delete from P1.users where userID = 9;
 alter table P1.users add test varchar(50);
 
 select * from P1.users where userID  = 0; --checking a possible null response

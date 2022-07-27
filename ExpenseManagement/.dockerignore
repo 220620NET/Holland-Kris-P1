@@ -1,0 +1,9 @@
+# This docker ignore is a list of files/folders to ignore when using copy commands in docker file
+
+.vs/
+.vscode/
+**/bin/
+**/obj/
+*.md
+.git/
+Validation/ 

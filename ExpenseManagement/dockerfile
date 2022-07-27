@@ -1,0 +1,20 @@
+# Docker File contains instructions to build our images
+#FROM keyword imports the baseimage to build our image upon
+# In our case, we are using .NET SDK as out initial base image
+FROM mcr.microsoft.com/dotnet/sdk:6.0 As build
+
+WORKDIR /app
+
+COPY . .
+
+RUN dotnet clean 
+RUN dotnet publish WebAPI --configuration Release -o ./publish
+
+# Mulit Stage build
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 As run
+
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+CMD ["dotnet", "WebAPI.dll"]

@@ -4,6 +4,7 @@ using CustomExceptions;
 using DataAccess;
 using Models;
 using WebAPI.Controllers;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 /*  Scoped Services
@@ -12,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
  *  For all Ticket endpoints I need TicketServices and TicketRepository to substitute ITicketDAO
  *  For all Authorization I need AuthServices
  *  Finally I will need the controllers for the API otherwise, I might as well not have a project
- */
+//  */
+// builder.Services.AddDbContext<ExpenseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("P1DB")));
 builder.Services.AddSingleton(ctx => ConnectionFactory.GetInstance(builder.Configuration.GetConnectionString("P1DB")));
 builder.Services.AddScoped<IUserDAO, UserRepository>();
 builder.Services.AddScoped<ITicketDAO, TicketRepostitory>();

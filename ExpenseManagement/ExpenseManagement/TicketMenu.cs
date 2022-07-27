@@ -94,17 +94,13 @@ namespace ConsoleFrontEnd
                 HttpResponseMessage response = await http.DeleteAsync(api + "fire/"+ userToFire);
                 if ((int)response.StatusCode == 202)
                 {
-
-                    bool? user = JsonSerializer.Deserialize<bool>(await response.Content.ReadAsStringAsync());
-                    if (user != null)
-                    {
-                        Console.WriteLine($"User {userToFire} has been fired.");
-
-                    }
+                   Console.WriteLine( $"User {userToFire} has been fired.") ;
+                    
                 } 
                 else
                 {
-                    Console.WriteLine($"User {userToFire} could not be fired. Check to see if that user exists in the system first.");
+                    Console.WriteLine($"User {userToFire} could not be fired. Check to see if that user exists in the system first and if they have tickets.");
+                    Console.WriteLine("If they have made tickets, contact IT to remove those tickets from the database before using this option again. Simply Deny any tickets they have pending if this is the correct decision.");
                 }
             }
             else
