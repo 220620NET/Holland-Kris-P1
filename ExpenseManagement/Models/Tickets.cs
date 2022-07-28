@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Models
 {
     public enum Status
     {
@@ -7,6 +9,7 @@
     }
     public class Tickets
     {
+        [Key]
         public int ticketNum { get; set; }
         public Status status { get; set; }
         public int author { get; set; }

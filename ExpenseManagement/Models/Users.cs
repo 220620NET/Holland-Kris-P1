@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -12,6 +13,7 @@ namespace Models
     }
     public class Users
     {
+        [Key]
         public int userId { get; set; }
         public string? username { get; set; }
         public string? password { get; set; }

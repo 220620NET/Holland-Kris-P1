@@ -6,14 +6,13 @@ namespace Services
     public class AuthServices
     {
         private readonly IUserDAO _user;
+        private readonly ExpenseDbContext expenseDbContext;
         // Dependency Injection
-        public AuthServices()
-        {
-            _user = new UserRepository();
-        }
+         
         public AuthServices(IUserDAO userDao)
         {
             _user = userDao;
+
         }
        
         /// <summary>
