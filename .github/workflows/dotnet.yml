@@ -1,0 +1,32 @@
+name: Continuous Integration
+
+# When to run this particular pipeline
+on:
+# runs on pushes to "main" and "staging" branch
+  push:
+    branches: [ "main", "staging" ]
+# runs on pr to main or staging branch
+  pull_request:
+    branches: [ "main","staging" ]
+  workflow_dispatch:
+  
+# Just a way to bundle a certain commands together into a unit
+jobs:
+# a jobs's name
+  build:
+# Which VM/environment should these commands run
+    runs-on: ubuntu-latest
+
+# What to do n this job("build")
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore ExpenseManagement/WebAPI
+    - name: Build
+      run: dotnet build --no-restore ExpenseManagement/WebAPI
+    - name: Test
+      run: dotnet test --no-build --verbosity normal ExpenseManagement/Validation
