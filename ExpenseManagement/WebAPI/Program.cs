@@ -5,6 +5,7 @@ using DataAccess;
 using Models;
 using WebAPI.Controllers;
 using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 /*  Scoped Services

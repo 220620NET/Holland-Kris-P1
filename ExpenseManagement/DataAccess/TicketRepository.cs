@@ -173,15 +173,13 @@ namespace DataAccess
             command.Parameters.AddWithValue("a", newTicket.amount);
             try
             {
-                connection.Open();
-               
-                    int ra = command.ExecuteNonQuery();
-                    connection.Close();
-                    if(ra != 0)
-                    {
-                        return true;
-                    }
-                
+                connection.Open(); 
+                int ra = command.ExecuteNonQuery();
+                connection.Close();
+                if(ra != 0)
+                {
+                    return true;
+                }                
             }
             catch (ResourceNotFoundException)
             {

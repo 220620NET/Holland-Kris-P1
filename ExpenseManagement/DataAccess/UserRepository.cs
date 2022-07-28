@@ -150,7 +150,7 @@ namespace DataAccess
             command.Parameters.AddWithValue("@p", newUser.password);
             command.Parameters.AddWithValue("@r", newUser.RoleToString(newUser.role));
             try
-            {
+            { 
                 conn.Open();
                 int ra = command.ExecuteNonQuery();
                 conn.Close();
