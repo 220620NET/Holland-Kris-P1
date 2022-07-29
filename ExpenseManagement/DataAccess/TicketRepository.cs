@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+﻿
 using Models;
-using CustomExceptions;
-using sensitive;
+using CustomExceptions; 
 
 namespace DataAccess
 {
