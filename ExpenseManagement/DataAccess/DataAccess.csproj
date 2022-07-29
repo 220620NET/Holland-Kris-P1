@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomExceptions\CustomExceptions.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\sensitive\sensitive.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" /> 
   </ItemGroup>
 
   <ItemGroup>
